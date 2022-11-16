@@ -1,6 +1,7 @@
 import React from 'react';
 import Footer from '../../components/Footer';
 import Hero from '../../components/Hero';
+import Ads from '../../components/Ads';
 import Navbar from '../../components/Navbar';
 import Recommend from '../../components/Recommend';
 import ScrollToTop from '../../components/ScrollToTop';
@@ -14,6 +15,7 @@ const Home = () => {
             <ScrollToTop />
             <Navbar />
             <Hero />
+            <Ads />
             <Top />
             <Recommend />
             <Subcribe />
