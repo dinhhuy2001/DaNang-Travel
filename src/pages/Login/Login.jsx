@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import img1 from '../../assets/danang.jpg';
+import validator from 'validator';
+import axios from 'axios'
+import {authAPi} from './api.js'
 
 export default function Login() {
     const [signIn, toggle] = React.useState(true);
@@ -10,26 +13,147 @@ export default function Login() {
         let path = `home`;
         navigate(path);
     };
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [password2, setPassword2] = useState("");
+    const [username, setUsername] = useState("");
+    const [logintext, setLogintext] = useState("");
+    const [loginpassword, setLoginpassword] = useState("");
+
+    async function onLogin(e){
+        e.preventDefault();
+        if(logintext === "" || loginpassword === ""){
+            console.log("error")
+        }
+        else{
+            if(validator.isEmail(logintext)) {
+                let data = {
+                    "email":logintext,
+                    "password":loginpassword
+                }
+                console.log("email")
+                axios.post(authAPi.loginapi, data,
+                    {
+                        headers:{
+                            "Content-Type" : "application/json",
+                            "Accept" : "application/json"
+                        }
+                    }
+                ).then(res => {
+                    console.log(res.data)
+                    localStorage.setItem('user-info', JSON.stringify(res.data))
+                    routeChange()
+                }).catch(error => {
+                    console.log(error)
+                })
+            } else {
+                console.log("username")
+                let data = {
+                    "username":logintext,
+                    "password":loginpassword
+                }
+                console.log(data)
+                axios.post(authAPi.loginapi, data,
+                    {
+                        headers:{
+                            "Content-Type" : "application/json",
+                            "Accept" : "application/json"
+                        }
+                    }
+                ).then(res => {
+                    console.log(res.data)
+                    localStorage.setItem('user-info', JSON.stringify(res.data))
+                    routeChange()
+                }).catch(error => {
+                    console.log(error)
+                })
+            }
+        }
+    }
+
+    async function onSignin(e){
+        e.preventDefault();
+        if(username === "" || password === "" || password2 === "" || email === "" || name === ""){
+            console.log("error")
+        }
+        else if ( password !== password2){
+            console.log("error")
+        }
+        else{
+            console.log("signin")
+            let data = {
+                "name":name,
+                "username":username,
+                "email":email,
+                "password":password,
+            }
+
+            axios.post(authAPi.registerapi, data,
+                {
+                    headers:{
+                        "Content-Type" : "application/json",
+                        "Accept" : "application/json"
+                    }
+                }
+            ).then(res => {
+                console.log(res.data)
+            }).catch(error => {
+                console.log(error)
+            })
+        }
+    }
     return (
         <Content>
             <Container>
                 <SignUpContainer signinIn={signIn}>
                     <Form>
                         <Title>Create Account</Title>
-                        <Input type="text" placeholder="Name" />
-                        <Input type="email" placeholder="Email" />
-                        <Input type="password" placeholder="Password" />
-                        <Button>Sign Up</Button>
+                        <Input type="text" placeholder="UserName" 
+                            onChange={(e)=> {
+                                setUsername(e.target.value)
+                            }}
+                        />
+                        <Input type="text" placeholder="Real Name" 
+                            onChange={(e) => {
+                                setName(e.target.value)
+                            }}
+                        />
+                        <Input type="email" placeholder="Email" 
+                            onChange={(e) => {
+                                setEmail(e.target.value)
+                            }}
+                        />
+                        <Input type="password" placeholder="Password" 
+                            onChange={(e) => {
+                                setPassword(e.target.value)
+                            }}
+                        />
+                        <Input type="password" placeholder="Confirm Password" 
+                            onChange={(e) => {
+                                setPassword2(e.target.value)
+                            }}
+                        />
+                        <Button onClick={(e) => {onSignin(e)}}>Sign Up</Button>
                     </Form>
                 </SignUpContainer>
 
                 <SignInContainer signinIn={signIn}>
                     <Form>
                         <Title>Sign in</Title>
-                        <Input type="email" placeholder="Email" />
-                        <Input type="password" placeholder="Password" />
+                        <Input type="text" placeholder="Email or Username" 
+                            onChange={(e) => {
+                                setLogintext(e.target.value)
+                            }}
+                        />
+                        <Input type="password" placeholder="Password" 
+                            onChange={(e) => {
+                                setLoginpassword(e.target.value)
+                            }}
+                        />
                         <Anchor href="#">Forgot your password?</Anchor>
-                        <Button onClick={routeChange}>Sign In</Button>
+                        <Button onClick={(e)=>{onLogin(e)}}>Sign In</Button>
                     </Form>
                 </SignInContainer>
 
