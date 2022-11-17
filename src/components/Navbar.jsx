@@ -4,8 +4,13 @@ import logo from '../assets/logo.png';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { VscChromeClose } from 'react-icons/vsc';
 import { BsHandbag, BsPerson } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
+import { GrLogout } from 'react-icons/gr';
+import { Link, Navigate } from 'react-router-dom';
 export default function Navbar() {
+    const logout = () => {
+        localStorage.clear();
+        window.location.reload(true);
+    }
     const [navbarState, setNavbarState] = useState(false);
     return (
         <>
@@ -47,11 +52,18 @@ export default function Navbar() {
                     <div className="bag">
                         <BsHandbag></BsHandbag>
                     </div>
-                    <div className="bag">
-                        <Link to="/">
-                            <BsPerson></BsPerson>
-                        </Link>
-                    </div>
+                    {
+                        localStorage.getItem('user-info')?
+                        <div className="bag" onClick={logout}>
+                            <GrLogout></GrLogout>
+                        </div>
+                        :
+                        <div className="bag">
+                            <Link to="/">
+                                <BsPerson></BsPerson>
+                            </Link>
+                        </div>
+                    }
                 </div>
             </Nav>
             <ResponsiveNav state={navbarState}>
