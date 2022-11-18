@@ -7,7 +7,7 @@ import Destination4 from "../assets/Destination4.png";
 import Destination5 from "../assets/Destination5.png";
 import Destination6 from "../assets/Destination6.png";
 
-export default function Recommend() {
+export default function Plan() {
   const data = [
     {
       image: Destination1,
@@ -26,25 +26,7 @@ export default function Recommend() {
       title: "Paris",
       subTitle: "Paris, France's capital, is a major European city and a",
       cost: "45,500",
-    },
-    {
-      image: Destination4,
-      title: "New Zealand",
-      subTitle: "New Zealand is an island country in the",
-      cost: "24,100",
-    },
-    {
-      image: Destination5,
-      title: "Bora Bora",
-      subTitle: "Bora Bora is a small South Pacific island northwest of",
-      cost: "95,400",
-    },
-    {
-      image: Destination6,
-      title: "London",
-      subTitle: "London, the capital of England and the United",
-      cost: "38,800",
-    },
+    }
   ];
 
   const packages = [
@@ -58,21 +40,7 @@ export default function Recommend() {
   return (
     <Section id="recommend">
       <div className="title">
-        <h2>Recommended Destinations</h2>
-      </div>
-      <div className="packages">
-        <ul>
-          {packages.map((pkg, index) => {
-            return (
-              <li
-                className={active === index + 1 ? "active" : ""}
-                onClick={() => setActive(index + 1)}
-              >
-                {pkg}
-              </li>
-            );
-          })}
-        </ul>
+        <h2>Plan your outing</h2>
       </div>
       <div className="destinations">
         {data.map((destination) => {
@@ -106,23 +74,7 @@ const Section = styled.section`
   .title {
     text-align: center;
   }
-  .packages {
-    display: flex;
-    justify-content: center;
-    margin: 2rem 0;
-    ul {
-      display: flex;
-      list-style-type: none;
-      width: max-content;
-      li {
-        padding: 1rem 2rem;
-        border-bottom: 0.1rem solid black;
-      }
-      .active {
-        border-bottom: 0.5rem solid #8338ec;
-      }
-    }
-  }
+
   .destinations {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
