@@ -4,6 +4,7 @@ import Home from './pages/home/Home';
 import Blog from './pages/blog/Blog';
 import AboutUs from './pages/about/AboutUs';
 import Contact from './pages/contact/Contact';
+import Login from './pages/Login/Login';
 import '../src/stylesheet/styles.scss';
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
