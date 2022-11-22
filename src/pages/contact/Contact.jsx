@@ -1,16 +1,18 @@
 import React from 'react';
 import Service from '../../components/Service';
 import Footer from '../../components/Footer';
-import Navbar from '../../components/Navbar';
+import Header from '../../components/Header';
 import ScrollToTop from '../../components/ScrollToTop';
 
 const Contact = () => {
-  return <div>
-    <ScrollToTop />
-      <Navbar />
+  return (
+    <div>
+      <ScrollToTop />
+      <Header />
       <Service />
       <Footer />
-  </div>;
+    </div>
+  );
 };
 
 export default Contact;

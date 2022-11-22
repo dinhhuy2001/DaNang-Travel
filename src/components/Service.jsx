@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import avatarImage from "../assets/avatarImage.jpeg";
 import img1 from "../assets/contact.png";
 export default function Service() {
   return (

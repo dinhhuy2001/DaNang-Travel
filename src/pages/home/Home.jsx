@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from '../../components/Footer';
 import Hero from '../../components/Hero';
-import Navbar from '../../components/Navbar';
+import Header from '../../components/Header';
 import Recommend from '../../components/Recommend';
 import ScrollToTop from '../../components/ScrollToTop';
 import Top from '../../components/Top';
@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <>
       <ScrollToTop />
-      <Navbar />
+      <Header />
       <Hero />
       <Top />
       <Recommend />
