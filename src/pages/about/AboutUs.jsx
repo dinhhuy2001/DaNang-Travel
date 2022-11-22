@@ -1,17 +1,18 @@
 import React from 'react';
 import Footer from '../../components/Footer';
-import Navbar from '../../components/Navbar';
 import ScrollToTop from '../../components/ScrollToTop';
-import About from '../../components/About';
-
+import SectionAbout from './partials/SectionAbout';
+import Header from '../../components/Header';
 
 const AboutUs = () => {
-  return <div>
+  return (
+    <>
       <ScrollToTop />
-      <Navbar />
-      <About />
+      <Header />
+      <SectionAbout />
       <Footer />
-  </div>;
+    </>
+  );
 };
 
 export default AboutUs;

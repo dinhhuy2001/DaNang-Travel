@@ -1,14 +1,16 @@
 import React from 'react';
 import Footer from '../../components/Footer';
-import Navbar from '../../components/Navbar';
+import Header from '../../components/Header';
 import ScrollToTop from '../../components/ScrollToTop';
 
 const Blog = () => {
-  return <div>
+  return (
+    <div>
       <ScrollToTop />
-      <Navbar />
+      <Header />
       <Footer />
-  </div>;
+    </div>
+  );
 };
 
 export default Blog;
