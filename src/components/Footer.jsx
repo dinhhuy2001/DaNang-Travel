@@ -74,7 +74,7 @@ export const Row = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;
-  border-bottom: 1px solid #727272;
+  border-bottom: 1px solid #D9D9D9;
 
   @media screen and (min-width: 280px) and (max-width: 768px) {
     grid-template-columns: 1fr;
