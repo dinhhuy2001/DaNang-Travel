@@ -56,8 +56,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding-top: 70px;
-  padding-bottom: 15px;
+  padding-top: 90px;
   background: #F7F8FA; 
 `;
 
@@ -68,10 +67,14 @@ export const Column = styled.div`
 `;
 
 export const Row = styled.div`
-  margin: 0 100px;
+  max-width: 1406px;
+  width: 100%;
+  padding: 0 15px 50px 15px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;
+  border-bottom: 1px solid #727272;
 
   @media screen and (min-width: 280px) and (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -106,9 +109,8 @@ export const Heading = styled.p`
   margin-bottom: 20px;
 `;
 export const CopyrightWrapper = styled.p`
-  border-top: 0.5px solid #727272;
   text-align: center;
-  padding-top: 15px;
+  padding: 30px;
   font-size: 14px;
   color: #727272;
   font-weight: 400;
