@@ -3,16 +3,11 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import img1 from '../../assets/danang.jpg';
 import validator from 'validator';
-<<<<<<< HEAD
 import axios from 'axios'
 import {authAPi} from './api.js'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
-=======
-import axios from 'axios';
-import { authAPi } from './api.js';
->>>>>>> 38a7cf3e7c7d8c59dc72af81bfe5f4223188da1d
 
 export default function Login() {
   const [signIn, toggle] = React.useState(true);
@@ -30,7 +25,6 @@ export default function Login() {
   const [logintext, setLogintext] = useState('');
   const [loginpassword, setLoginpassword] = useState('');
 
-<<<<<<< HEAD
     async function onLogin(e){
         e.preventDefault();
         if(logintext === "" || loginpassword === ""){
@@ -84,61 +78,9 @@ export default function Login() {
                 })
             }
         }
-=======
-  async function onLogin(e) {
-    e.preventDefault();
-    if (logintext === '' || loginpassword === '') {
-      console.log('error');
-    } else {
-      if (validator.isEmail(logintext)) {
-        let data = {
-          email: logintext,
-          password: loginpassword,
-        };
-        console.log('email');
-        axios
-          .post(authAPi.loginapi, data, {
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-          })
-          .then((res) => {
-            console.log(res.data);
-            localStorage.setItem('user-info', JSON.stringify(res.data));
-            routeChange();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        console.log('username');
-        let data = {
-          username: logintext,
-          password: loginpassword,
-        };
-        console.log(data);
-        axios
-          .post(authAPi.loginapi, data, {
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-          })
-          .then((res) => {
-            console.log(res.data);
-            localStorage.setItem('user-info', JSON.stringify(res.data));
-            routeChange();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
->>>>>>> 38a7cf3e7c7d8c59dc72af81bfe5f4223188da1d
     }
-  }
-
-<<<<<<< HEAD
+  
+  
     async function onSignin(e){
         e.preventDefault();
         if(username === "" || password === "" || password2 === "" || email === "" || name === ""){
@@ -173,44 +115,8 @@ export default function Login() {
                 toast.error('register failed!')
             })
         }
-=======
-  async function onSignin(e) {
-    e.preventDefault();
-    if (
-      username === '' ||
-      password === '' ||
-      password2 === '' ||
-      email === '' ||
-      name === ''
-    ) {
-      console.log('error');
-    } else if (password !== password2) {
-      console.log('error');
-    } else {
-      console.log('signin');
-      let data = {
-        name: name,
-        username: username,
-        email: email,
-        password: password,
-      };
-
-      axios
-        .post(authAPi.registerapi, data, {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
->>>>>>> 38a7cf3e7c7d8c59dc72af81bfe5f4223188da1d
     }
-  }
+  
   return (
     <Content>
       <Container>
