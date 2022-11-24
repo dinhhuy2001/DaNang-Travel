@@ -5,6 +5,9 @@ import img1 from '../../assets/danang.jpg';
 import validator from 'validator';
 import axios from 'axios'
 import {authAPi} from './api.js'
+import {ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function Login() {
     const [signIn, toggle] = React.useState(true);
@@ -26,6 +29,7 @@ export default function Login() {
         e.preventDefault();
         if(logintext === "" || loginpassword === ""){
             console.log("error")
+            toast.error('please fill all the fields')
         }
         else{
             if(validator.isEmail(logintext)) {
@@ -44,6 +48,7 @@ export default function Login() {
                 ).then(res => {
                     console.log(res.data)
                     localStorage.setItem('user-info', JSON.stringify(res.data))
+                    toast.success('Login successfully!')
                     routeChange()
                 }).catch(error => {
                     console.log(error)
@@ -65,9 +70,11 @@ export default function Login() {
                 ).then(res => {
                     console.log(res.data)
                     localStorage.setItem('user-info', JSON.stringify(res.data))
+                    toast.success('Login successfully!')
                     routeChange()
                 }).catch(error => {
                     console.log(error)
+                    toast.error('wrong password or username or email!')
                 })
             }
         }
@@ -77,9 +84,11 @@ export default function Login() {
         e.preventDefault();
         if(username === "" || password === "" || password2 === "" || email === "" || name === ""){
             console.log("error")
+            toast.error('please fill all the fields')
         }
         else if ( password !== password2){
             console.log("error")
+            toast.error('the password and confirm password must be the same.')
         }
         else{
             console.log("signin")
@@ -99,8 +108,10 @@ export default function Login() {
                 }
             ).then(res => {
                 console.log(res.data)
+                toast.success('register successfully!')
             }).catch(error => {
                 console.log(error)
+                toast.error('register failed!')
             })
         }
     }
