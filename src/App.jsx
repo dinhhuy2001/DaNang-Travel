@@ -6,19 +6,22 @@ import AboutUs from './pages/about/AboutUs';
 import Contact from './pages/contact/Contact';
 import Login from './pages/Login/Login';
 import '../src/stylesheet/styles.scss';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
-  return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </BrowserRouter>
-    </>
-  );
+    return (
+        <>
+            <ToastContainer/>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/" element={<Login />} />
+                    <Route path="/about" element={<AboutUs />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/contact" element={<Contact />} />
+                </Routes>
+            </BrowserRouter>
+        </>
+    );
 }
