@@ -5,6 +5,9 @@ import Blog from './pages/blog/Blog';
 import AboutUs from './pages/about/AboutUs';
 import Contact from './pages/contact/Contact';
 import Login from './pages/Login/Login';
+import Profile from './pages/profile/Profile.screen';
+import Info from './pages/profile/components/info/Info.component';
+import ChangePassword from './pages/changePassword/changePassword.screeen';
 import '../src/stylesheet/styles.scss';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,6 +23,8 @@ export default function App() {
                     <Route path="/about" element={<AboutUs />} />
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/contact" element={<Contact />} />
+                    <Route path="/profile" element={<Profile><Info/></Profile>} />
+                    <Route path="/change-pass" element={<Profile><ChangePassword/></Profile>} />
                 </Routes>
             </BrowserRouter>
         </>
