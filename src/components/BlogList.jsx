@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Destination1 from "../assets/Destination1.png";
-import img1 from "../assets/Long.jpg";
+import img1 from "../assets/Long.png";
 
 
 export default function BlogList() {
