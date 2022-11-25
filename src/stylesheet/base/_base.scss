@@ -9,3 +9,17 @@ body {
   font-family: 'DM Sans', sans-serif;
   color: #232323;
 }
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+input {
+  outline: 0;
+  border: 0;
+}
