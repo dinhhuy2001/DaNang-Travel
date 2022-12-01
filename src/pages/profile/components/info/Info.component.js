@@ -15,7 +15,7 @@ export default function Info() {
         <Col md={15} sm={24} xs={24}>
           <Row>
             <Col span={24}>
-              <Title level={5}>'Personal Infomation'</Title>
+              <Title level={5}>Personal Infomation</Title>
             </Col>
           </Row>
           <FormProfile />
