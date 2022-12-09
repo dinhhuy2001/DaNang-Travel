@@ -12,8 +12,6 @@ export default function Top() {
     {
       icon: img1,
       title: "Caffee",
-      subTitle:
-        "3 Location",
     },
     {
       icon: img2,
@@ -24,26 +22,18 @@ export default function Top() {
     {
       icon: img3,
       title: "Hotel",
-      subTitle:
-        "5 Location",
     },
     {
       icon: img4,
       title: "Supermarket",
-      subTitle:
-        "7 Location",
     },
     {
       icon: img5,
       title: "Bar",
-      subTitle:
-        "2 Location",
     },
     {
       icon: img6,
       title: "Pub",
-      subTitle:
-        "1 Location",
     },
   ];
   return (
@@ -60,7 +50,6 @@ export default function Top() {
                 <img src={service.icon} alt="" />
               </div>
               <h3>{service.title}</h3>
-              <p>{service.subTitle}</p>
             </div>
           );
         })}
@@ -82,7 +71,7 @@ const Section = styled.section`
     .destination {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.5rem;
       padding: 2rem 0;
       background-color: aliceblue;
       box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -94,8 +83,8 @@ const Section = styled.section`
       }
       .icon {
         img {
-          width: 100px;
-          height: 100px;
+          width: 150px;
+          height: 150px;
           border-radius: 50%;
         }
       }
