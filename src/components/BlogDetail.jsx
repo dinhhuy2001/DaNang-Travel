@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Destination1 from "../assets/Destination1.png";
 import img1 from "../assets/Long.png";
@@ -60,7 +60,6 @@ export default function BlogDetail() {
 	]
 	const tags = ["Content", "Offers", "Promotion", "SEO", "Social media"]
 
-	const [active, setActive] = useState(1);
 	return (
 		<Section id="recommend">
 			<ul className="breadcrumb">
