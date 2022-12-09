@@ -9,6 +9,7 @@ export default function BlogDetail() {
 	const post =
 	{
 		image: Destination1,
+		rating: 3,
 		title: "A Seaside Reset in Laguna Beach",
 		body: "From the iconic to the unexpected, the city of San Francisco never ceases to surprise. Kick-start your effortlessly delivered Northern California holiday in the cosmopolitan hills of The City . Join your Travel Director and fellow travellers for a Welcome Reception at your hotel.",
 		avatar: img1,
@@ -71,6 +72,16 @@ export default function BlogDetail() {
 				<div className="post">
 					<img src={post.image} alt="" />
 					<div className="tag">Coffee</div>
+					<div className="star-rating">
+						{[...Array(5)].map((star, index) => {
+							index += 1;
+							return (
+								<button type="button" key={index} className={index <= post.rating ? "on" : "off"}>
+									<span className="star" >&#9733;</span>
+								</button>
+							);
+						})}
+					</div>
 					<h3>{post.title}</h3>
 					<div className="info">
 						<img src={post.avatar} alt="" />
@@ -383,6 +394,23 @@ const Section = styled.section`
       h3, p {
         padding-inline:20px;
       }
+	  .star-rating {
+		padding-inline:20px;
+
+	  }
+	  button {
+		background-color: transparent;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		font-size:2rem;
+	  }
+	  .on {
+		color: #F2994A;
+	  }
+	  .off {
+		color: #ccc;
+	  }
       .info {
         display: flex;
         align-items: center;
