@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect }  from "react";
+import { Navigate } from "react-router";
 import styled from "styled-components";
 
 export default function Login() {
     const [signIn, toggle] = React.useState(true);
+
     return(
         <Container>
             <SignUpContainer signinIn={signIn}>

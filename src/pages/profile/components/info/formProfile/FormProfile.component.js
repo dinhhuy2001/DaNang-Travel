@@ -18,6 +18,7 @@ import FormInput from '../../../../../components/input';
 import { ProfileSchema } from '../../../schema/Schema';
 import DefaultImg from '../../../../../assets/profile/defaultImg.png';
 import { WrapperForm, ValidationError } from './styled';
+import axios from 'axios';
 
 export default function FormProfile() {
   const { Text } = Typography;
@@ -44,6 +45,18 @@ export default function FormProfile() {
 
   const onSubmit = (data) => {
     console.log(data);
+    axios.post("http://127.0.0.1:8000/api/editprofile/"+ (JSON.parse(localStorage.getItem("user-info")).id),data,
+    {
+      headers : {
+        "Content-Type": "multipart/form-data",
+    }
+  } 
+    ).then(
+      res => {
+        console.log(res.data)
+        localStorage.setItem('user-info', JSON.stringify(res.data))
+      }
+    )
     // delete data.email;
     // updateUser({ data, callbackSuccess: updateInfoSuccess, callbackFail: updateInfoFail });
   };
@@ -59,7 +72,7 @@ export default function FormProfile() {
   //     .finally(() => setIsUpload(false));
   //   setIsUpload(false);
   // };
-
+console.log(JSON.parse(localStorage.getItem('user-info')).avatar)
   return (
     <WrapperForm>
       {/* {currentUser ? (
@@ -68,8 +81,10 @@ export default function FormProfile() {
             <Row justify='center' align='middle' gutter={24}>
               <Col xl={6} sm={24} xs={24} className='flex-avatar'>
                 <Image
-                  // src={currentUser?.avatar ? currentUser.avatar : DefaultImg}
-                  src={DefaultImg}
+                  src={JSON.parse(localStorage.getItem('user-info')).avatar !== null
+                    ? 'http://127.0.0.1:8000/storage/'+ JSON.parse(localStorage.getItem('user-info')).avatar 
+                    : DefaultImg}
+                  // src={DefaultImg}
                   alt='Avatar'
                   className='avatar-view'
                 />
@@ -90,8 +105,8 @@ export default function FormProfile() {
               <Col xl={18} sm={24} xs={24}>
                 <FormInput
                   label={'Name'}
-                  name='username'
-                  // defaultValue={currentUser?.username}
+                  name='name'
+                  defaultValue={JSON.parse(localStorage.getItem('user-info')).username}
                   control={control}
                   errors={errors?.username?.message}
                   Icon={UserOutlined}
@@ -99,7 +114,7 @@ export default function FormProfile() {
                 <FormInput
                   label={'Email'}
                   name='email'
-                  // defaultValue={currentUser?.email}
+                  defaultValue={JSON.parse(localStorage.getItem('user-info')).email}
                   control={control}
                   errors={errors?.email?.message}
                   Icon={MailOutlined}
@@ -120,6 +135,7 @@ export default function FormProfile() {
               label={'Birth Date'}
               name='birthdate'
               // defaultValue={currentUser?.birthdate}
+              // defaultValue={JSON.parse(localStorage.getItem('user-info')).birth}
               control={control}
               errors={errors?.birthdate?.message}
               Icon={CalendarOutlined}
@@ -138,11 +154,12 @@ export default function FormProfile() {
                 <Controller
                   name='gender'
                   // defaultValue={currentUser?.gender.toString()}
+                  defaultValue={JSON.parse(localStorage.getItem('user-info')).gender}
                   control={control}
                   render={({ field }) => (
                     <Radio.Group className='radio-gender' {...field}>
-                      <Radio value='1'> {'Male'}</Radio>
-                      <Radio value='0'>{'Female'}</Radio>
+                      <Radio value={1}> {'Male'}</Radio>
+                      <Radio value={0}>{'Female'}</Radio>
                     </Radio.Group>
                   )}
                 />
@@ -167,7 +184,7 @@ export default function FormProfile() {
 
             <Row>
               <Col span={24} className='button-save'>
-                <Button type='primary'>Save Change</Button>
+                <Button type='primary' htmlType='submit'>Save Change</Button>
               </Col>
             </Row>
           </Form>
