@@ -1,5 +1,5 @@
 import { Dropdown } from "antd";
-import { default as React, default as React, useState } from "react";
+import { React, useState } from "react";
 import { BiUser } from "react-icons/bi";
 import { BsHandbag } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
