@@ -11,6 +11,7 @@ import ChangePassword from './pages/changePassword/changePassword.screeen';
 import '../src/stylesheet/styles.scss';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Bloglist from './pages/bloglist/Bloglist';
 
 export default function App() {
     return (
@@ -21,7 +22,8 @@ export default function App() {
                     <Route path="/home" element={<Home />} />
                     <Route path="/" element={<Login />} />
                     <Route path="/about" element={<AboutUs />} />
-                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/bloglist" element={<Bloglist />} />
+                    <Route path="/blog/:id" element={<Blog />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/profile" element={<Profile><Info/></Profile>} />
                     <Route path="/change-pass" element={<Profile><ChangePassword/></Profile>} />
