@@ -1,10 +1,38 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { api, api_image } from "../API/api";
 import Destination1 from "../assets/Destination1.png";
 import img1 from "../assets/Long.png";
 
 
 export default function BlogList() {
+  const [category, setCategory] = useState()
+  const [categoryId, setCategoryId] = useState(1)
+  const [blog, setBlog] = useState([])
+  const navigate = useNavigate()
+  useEffect(()=>{
+    const URL = api + "api/category"
+    axios.get(URL)
+    .then(
+      res => {
+        console.log(res.data)
+        setCategory(res.data)
+      }
+    )
+  },[])
+
+  useEffect(()=>{
+    const URL = api + `api/blogByCate?category_id=${categoryId}`
+    axios.get(URL)
+    .then(
+      res => {
+        console.log(res.data)
+        setBlog(res.data)
+      }
+    )
+  },[categoryId])
   const data = [
     {
       image: Destination1,
@@ -78,17 +106,19 @@ export default function BlogList() {
       </ul>
       
       <div className="posts">
-        {data.map((post) => {
+        {blog.data?.map((post) => {
           return (
-            <div className="post">
-              <img src={post.image} alt="" />
+            <div className="post" style={{cursor:"pointer"}} onClick={()=>{
+              navigate(`/blog/${post.id}`);
+              }}>
+              <img src={api_image+post.image} alt="" />
               <div class="tag">Coffee</div>
-              <h3>{post.title}</h3>
-              <p>{post.subTitle}</p>
+              <h3>{post.name}</h3>
+              <p>{post.description}</p>
               <div className="info">
-                <img src={post.avatar}alt=""/>
+                <img src={post.avatar == null ? img1: api_image+ post.avatar}alt=""/>
                   <span>BY</span><h3>{post.author}</h3>
-                <span>{post.date}</span>
+                <span>{new Date(post.updated_at).toLocaleDateString([],{ year: 'numeric', month: 'long', day: 'numeric' })}</span>
               </div>
             </div>
           );
@@ -103,6 +133,27 @@ export default function BlogList() {
           </form>
         </div>
         <div className="card">
+          <h3>Categories</h3>
+          {category?.map((item) => {
+            return (
+              <div style={{cursor: "pointer"}} className="cat-item"
+              onClick={
+                ()=>{
+                  console.log(item.id)
+                  setCategoryId(item.id)
+                }
+              }
+              >
+                <div className="item-name">
+                  <h4>{item.name}</h4>
+                  </div>
+
+                  <h4>{item.number}</h4>
+              </div>
+          );})}
+          
+        </div>
+        <div className="card">
           <h3>Popular posts</h3>
           {popular.map((post) => {
             return (
@@ -114,20 +165,6 @@ export default function BlogList() {
                   <h4>{post.title}</h4>
                   <p>{post.subTitle}</p>
                 </div>
-              </div>
-          );})}
-          
-        </div>
-        <div className="card">
-          <h3>Categories</h3>
-          {categories.map((item) => {
-            return (
-              <div className="cat-item">
-                <div className="item-name">
-                  <h4>{item.name}</h4>
-                  </div>
-
-                  <h4>{item.number}</h4>
               </div>
           );})}
           

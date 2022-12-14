@@ -1,11 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Destination1 from "../assets/Destination1.png";
 import img1 from "../assets/Long.png";
 import img2 from "../assets/Huy.png";
+import { useParams } from "react-router";
+import axios from "axios";
+import { api, api_image } from "../API/api";
 
 
 export default function BlogDetail() {
+	const params = useParams();
+	const [blogdata,setBlogdata] = useState()
+	// useEffect(()=>{
+	// 	const URL2 = api + `api/blog/${params.id}`
+	// 	axios.get(URL2)
+	// 	.then(
+	// 		res=>{
+	// 			console.log(res.data)
+	// 		}
+	// 	)
+	// },[])
+	useEffect(()=>{
+		const URL = api + `api/blog/${params.id}`
+		axios.get(URL)
+		.then(
+			res => {
+				console.log(res.data)
+				setBlogdata(res.data)
+			}
+		)
+	},[])
 	const post =
 	{
 		image: Destination1,
@@ -69,27 +93,27 @@ export default function BlogDetail() {
 
 			<div className="posts">
 				<div className="post">
-					<img src={post.image} alt="" />
+					<img src={api_image + blogdata?.image} alt="" />
 					<div className="tag">Coffee</div>
 					<div className="star-rating">
 						{[...Array(5)].map((star, index) => {
 							index += 1;
 							return (
-								<button type="button" key={index} className={index <= post.rating ? "on" : "off"}>
+								<button type="button" key={index} className={index <= blogdata?.rating ? "on" : "off"}>
 									<span className="star" >&#9733;</span>
 								</button>
 							);
 						})}
 					</div>
-					<h3>{post.title}</h3>
+					<h3>{blogdata?.name}</h3>
 					<div className="info">
-						<img src={post.avatar} alt="" />
-						<span>BY</span><h3>{post.author}</h3>
-						<span>{post.date}</span>
+						<img src={blogdata?.avatar == null ? img1: api_image+ blogdata?.avatar} alt="" />
+						<span>BY</span><h3>{blogdata?.author}</h3>
+						<span>{new Date(blogdata?.updated_at).toLocaleDateString([],{ year: 'numeric', month: 'long', day: 'numeric' })}</span>
 					</div>
-					<p>{post.body}</p>
-					<p>{post.body}</p>
-					<p>{post.body}</p>
+					<p>{blogdata?.description}</p>
+					{/* <p>{blogdata.body}</p>
+					<p>{blogdata.body}</p> */}
 				</div>
 				<div className="pagination">
 					<div className="pagination-item">
@@ -118,6 +142,7 @@ export default function BlogDetail() {
 								1 Comment
 							</h2>
 						</div>
+						{
 						<div className="comments-inner section-inner thin max-percentage">
 							<div id="comment-1" className="comment even thread-even depth-1">
 								<article id="div-comment-1" className="comment-body">
@@ -139,6 +164,7 @@ export default function BlogDetail() {
 								</article>
 							</div>
 						</div>
+						}
 
 					</div>
 					<hr className="styled-separator is-style-wide" aria-hidden="true" />
