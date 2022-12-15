@@ -4,33 +4,37 @@ import IconFacebook from "../assets/icons/facebook.png";
 import IconTwitter from "../assets/icons/twitter.png";
 import IconInstagram from "../assets/icons/instagram.png";
 import IconYoutube from "../assets/icons/youtube.png";
+import { useTranslation } from "react-i18next";
 export default function Footer() {
+  const { t } = useTranslation();
   return (
     <Container>
       <Row>
         <Column>
-          <Heading>Support</Heading>
-          <FooterLink href="#">Help center</FooterLink>
-          <FooterLink href="#">Our COVID-19 Response</FooterLink>
-          <FooterLink href="#">Cancellation options</FooterLink>
-          <FooterLink href="#">Safety information</FooterLink>
+          <Heading>{t("common.footer.support")}</Heading>
+          <FooterLink href="#">{t("common.footer.help_center")}</FooterLink>
+          <FooterLink href="#">{t("common.footer.cv_res")}</FooterLink>
+          <FooterLink href="#">{t("common.footer.cancel_option")}</FooterLink>
+          <FooterLink href="#">{t("common.footer.safety_info")}</FooterLink>
         </Column>
         <Column>
-          <Heading>Company</Heading>
-          <FooterLink href="#">About us</FooterLink>
-          <FooterLink href="#">Community Blog</FooterLink>
-          <FooterLink href="#">Careers</FooterLink>
-          <FooterLink href="#">Privacy policy</FooterLink>
-          <FooterLink href="#">Terms of service</FooterLink>
+          <Heading>{t("common.footer.company")}</Heading>
+          <FooterLink href="#">{t("common.footer.about_us")}</FooterLink>
+          <FooterLink href="#">{t("common.footer.community_blog")}</FooterLink>
+          <FooterLink href="#">{t("common.footer.carrer")}</FooterLink>
+          <FooterLink href="#">{t("common.footer.privacy_policy")}</FooterLink>
+          <FooterLink href="#">
+            {t("common.footer.terms_of_service")}
+          </FooterLink>
         </Column>
         <Column>
-          <Heading>Contact</Heading>
-          <FooterLink href="#">Partnerships</FooterLink>
-          <FooterLink href="#">FAQ</FooterLink>
-          <FooterLink href="#">Get in touch</FooterLink>
+          <Heading>{t("common.footer.contact")}</Heading>
+          <FooterLink href="#">{t("common.footer.partnership")}</FooterLink>
+          <FooterLink href="#">{t("common.footer.FAQ")}</FooterLink>
+          <FooterLink href="#">{t("common.footer.get_in_touch")}</FooterLink>
         </Column>
         <Column>
-          <Heading>Social Media</Heading>
+          <Heading>{t("common.footer.support")}</Heading>
           <FooterSocial>
             <FooterLink href="#">
               <img alt="facebook" src={IconFacebook} width="40px" />
@@ -57,7 +61,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: space-around;
   padding-top: 90px;
-  background: #F7F8FA; 
+  background: #f7f8fa;
 `;
 
 export const Column = styled.div`
@@ -74,7 +78,7 @@ export const Row = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;
-  border-bottom: 1px solid #D9D9D9;
+  border-bottom: 1px solid #d9d9d9;
 
   @media screen and (min-width: 280px) and (max-width: 768px) {
     grid-template-columns: 1fr;

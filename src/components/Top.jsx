@@ -4,9 +4,10 @@ import axios from 'axios';
 import { api, api_image } from '../API/api';
 import Slider from 'react-slick';
 import imgDN from '../assets/danang.jpg';
-
+import { useTranslation } from 'react-i18next';
 export default function Top() {
   const [category, setCategory] = useState();
+  const {t} = useTranslation()
   const [isRequestAPI, setIsRequestAPI] = useState(false);
   const settings = {
     speed: 200,
@@ -54,7 +55,7 @@ export default function Top() {
   return (
     <section className='section-top'>
       <div className='container'>
-        <h2 className='txt-title txt-center mb-5'>Top destinations</h2>
+        <h2 className='txt-title txt-center mb-5'>{t('home.top_destination')}</h2>
         <div className='destination-list'>
           <Slider {...settings}>
             {category?.map((item) => {

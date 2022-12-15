@@ -5,9 +5,10 @@ import styled from "styled-components";
 import { api, api_image } from "../API/api";
 import Destination1 from "../assets/Destination1.png";
 import img1 from "../assets/Long.png";
-
+import { useTranslation } from "react-i18next";
 
 export default function BlogList() {
+  const {t} = useTranslation()
   const [category, setCategory] = useState()
   const [categoryId, setCategoryId] = useState(1)
   const [blog, setBlog] = useState([])
@@ -101,8 +102,8 @@ export default function BlogList() {
   return (
     <Section id="recommend">
       <ul class="breadcrumb">
-        <li><a href="/home">Home</a></li>
-        <li>Blog</li>
+        <li><a href="/home">{t('blog.home')}</a></li>
+        <li>{t('blog.blog')}</li>
       </ul>
       
       <div className="posts">
@@ -126,14 +127,14 @@ export default function BlogList() {
       </div>
       <div className="sidebar">
         <div className="card">
-          <h3>Search</h3>
+          <h3>{t('blog.search')}</h3>
           <form >
-            <input type="text" placeholder="Search.." name="search"/>
+            <input type="text" placeholder={t('blog.search')} name="search"/>
             <button type="submit"><i class="fa fa-search"></i></button>
           </form>
         </div>
         <div className="card">
-          <h3>Categories</h3>
+          <h3>{t('blog.categories')}</h3>
           {category?.map((item) => {
             return (
               <div style={{cursor: "pointer"}} className="cat-item"
@@ -154,7 +155,7 @@ export default function BlogList() {
           
         </div>
         <div className="card">
-          <h3>Popular posts</h3>
+          <h3>{t('blog.popular_post')}</h3>
           {popular.map((post) => {
             return (
               <div className="post">
