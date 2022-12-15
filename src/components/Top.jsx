@@ -6,7 +6,6 @@ import imgDN from "../assets/danang.jpg";
 import { StarFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
-import { async } from "q";
 
 export default function Top() {
   const [category, setCategory] = useState();
@@ -29,11 +28,22 @@ export default function Top() {
   }, [categoryId]);
 
   const renderRating = (rating) => {
+    if (!rating) {
+      return (
+        <ul className='rating-list'>
+          {[...Array(5).keys()].map((item) => (
+            <li className='rating-item'>
+              <StarFilled style={{ fontSize: '14px', color: '#eaeef3' }}/>
+            </li>
+          ))}
+        </ul>
+      );
+    }
     return (
       <ul className="rating-list">
         {[...Array(rating).keys()].map((item) => (
-          <li className="rating-item">
-            <StarFilled style={{ fontSize: "14px", color: "#DA6938" }} />
+          <li className='rating-item'>
+            <StarFilled style={{ fontSize: '14px', color: '#DA6938' }} />
           </li>
         ))}
       </ul>
@@ -97,8 +107,8 @@ export default function Top() {
                     <div className="destination-image">
                       <img
                         src={
-                          item.image !== null ?? item.image !== ""
-                            ? item.image.includes("http")
+                          item.image !== null ?? item.image !== ''
+                            ? item.image.includes('http')
                               ? item.image
                               : api_image + item.image
                             : imgDN
@@ -115,16 +125,16 @@ export default function Top() {
         </div>
       </section>
 
-      <section className="section-plan" style={{ backgroundColor: "#fff" }}>
-        <div className="container">
-          <h2 className="txt-title txt-center mb-5">{t('home.top_destination')}</h2>
-          <div className="plan-wrapper">
-            <ul className="plan-list row">
+      <section className='section-plan'>
+        <div className='container'>
+          <h2 className='txt-title txt-center mb-5'>Top destinations</h2>
+          <div className='plan-wrapper'>
+            <ul className='plan-list row'>
               {blog?.data?.map((item) => {
                 return (
                   <li
-                    className="plan-item col-3"
-                    style={{ cursor: "pointer" }}
+                    className='plan-item col-3'
+                    style={{ cursor: 'pointer' }}
                     onClick={() => {
                       navigate(`/blog/${item.id}`);
                     }}
@@ -134,8 +144,8 @@ export default function Top() {
                         <a>
                           <img
                             src={
-                              item.image !== "" ?? item.image !== null
-                                ? item.image.includes("http")
+                              item.image !== '' ?? item.image !== null
+                                ? item.image.includes('http')
                                   ? item.image
                                   : api_image + item.image
                                 : imgDN
@@ -146,11 +156,11 @@ export default function Top() {
                       </div>
                       <div className="card-content">
                         {renderRating(item.rating)}
-                        <h4 className="card-name">
-                          <h1>{item.name}</h1>
+                        <h4 className='card-name'>
+                          {item.name}
                         </h4>
-                        <p className="card-address">{item.address}</p>
-                        <p className="card-desc">{item.description}</p>
+                        <p className='card-address'>{item.address}</p>
+                        <p className='card-desc'>{item.description}</p>
                       </div>
                     </div>
                   </li>
