@@ -2,6 +2,9 @@
   "blog": {
     "search": "探す",
     "categories": "カテゴリー",
+    "comment":"コメント",
+    "leave_comment":"コメントを残す",
+    "say":"いう",
     "popular_post": "人気の投稿",
     "home": "ホーム",
     "blog": "ブログ"

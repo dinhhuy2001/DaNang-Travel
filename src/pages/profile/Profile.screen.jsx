@@ -5,10 +5,10 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import DefaultImg from '../../assets/profile/defaultImg.png';
 import { WrapperProfile } from './styled';
-
+import { useTranslation } from 'react-i18next';
 export default function Profile({ children }) {
   const { Title, Text } = Typography;
-
+  const { t } = useTranslation();
   return (
     <WrapperProfile>
       <Header/>
@@ -28,7 +28,7 @@ export default function Profile({ children }) {
                     />
                   </Col>
                   <Col span={24}>
-                    <Title level={5}>{'Account For:'}</Title>
+                    <Title level={5}>{t('profile.account_for')}:</Title>
                     <Text>UserName</Text>
                   </Col>
                 </Skeleton>
@@ -37,7 +37,7 @@ export default function Profile({ children }) {
 
             <Col md={20} sm={24} xs={24}>
               <Row>
-                <Title level={4}>{'Account Infomation:'}</Title>
+                <Title level={4}>{t('profile.account_information')}</Title>
               </Row>
               {children}
             </Col>

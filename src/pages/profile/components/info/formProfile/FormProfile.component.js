@@ -20,6 +20,8 @@ import DefaultImg from '../../../../../assets/profile/defaultImg.png';
 import { WrapperForm, ValidationError } from './styled';
 import axios from 'axios';
 import { api, api_image } from '../../../../../API/api';
+import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 export default function FormProfile() {
   const { Text } = Typography;
@@ -46,7 +48,7 @@ export default function FormProfile() {
 
   const onSubmit = (data) => {
     console.log(data);
-    axios.post(api+"api/editprofile/"+ (JSON.parse(localStorage.getItem("user-info")).id),data,
+    axios.post(api+"api/editprofile/"+ (JSON.parse(localStorage.getItem("user-info"))?.id),data,
     {
       headers : {
         "Content-Type": "multipart/form-data",
@@ -73,7 +75,7 @@ export default function FormProfile() {
     //   .finally(() => setIsUpload(false));
     setIsUpload(false);
   };
-console.log(JSON.parse(localStorage.getItem('user-info')).avatar)
+console.log(JSON.parse(localStorage.getItem('user-info'))?.avatar)
   return (
     <WrapperForm>
       {/* {currentUser ? (
@@ -82,8 +84,8 @@ console.log(JSON.parse(localStorage.getItem('user-info')).avatar)
             <Row justify='center' align='middle' gutter={24}>
               <Col xl={6} sm={24} xs={24} className='flex-avatar'>
                 <Image
-                  src={JSON.parse(localStorage.getItem('user-info')).avatar !== null
-                    ? api_image+ JSON.parse(localStorage.getItem('user-info')).avatar 
+                  src={JSON.parse(localStorage.getItem('user-info'))?.avatar !== null
+                    ? api_image+ JSON.parse(localStorage.getItem('user-info'))?.avatar 
                     : DefaultImg}
                   // src={DefaultImg}
                   alt='Avatar'
@@ -105,26 +107,26 @@ console.log(JSON.parse(localStorage.getItem('user-info')).avatar)
 
               <Col xl={18} sm={24} xs={24}>
                 <FormInput
-                  label={'Name'}
+                  label={t('profile.name')}
                   name='name'
-                  defaultValue={JSON.parse(localStorage.getItem('user-info')).username}
+                  defaultValue={JSON.parse(localStorage.getItem('user-info'))?.username}
                   control={control}
                   errors={errors?.username?.message}
                   Icon={UserOutlined}
                 />
                 <FormInput
-                  label={'Email'}
+                  label={t('profile.email')}
                   name='email'
-                  defaultValue={JSON.parse(localStorage.getItem('user-info')).email}
+                  defaultValue={JSON.parse(localStorage.getItem('user-info'))?.email}
                   control={control}
                   errors={errors?.email?.message}
                   Icon={MailOutlined}
                   disabled={true}
                 />
                 <FormInput
-                  label={'Phone Number'}
+                  label={t('profile.phone_number')}
                   name='phone'
-                  defaultValue={JSON.parse(localStorage.getItem('user-info')).phone}
+                  defaultValue={JSON.parse(localStorage.getItem('user-info'))?.phone}
                   control={control}
                   errors={errors?.phoneNumber?.message}
                   Icon={PhoneOutlined}
@@ -133,7 +135,7 @@ console.log(JSON.parse(localStorage.getItem('user-info')).avatar)
             </Row>
 
             <FormInput
-              label={'Birth Date'}
+              label={t('profile.birth_date')}
               name='birthdate'
               // defaultValue={currentUser?.birthdate}
               // defaultValue={JSON.parse(localStorage.getItem('user-info')).birth}
@@ -147,7 +149,7 @@ console.log(JSON.parse(localStorage.getItem('user-info')).avatar)
             <Row justify='center' align='middle'>
               <Col xl={4} sm={24} xs={24}>
                 <Text className='form__label'>
-                  <HeartOutlined className='icon' /> {'Gender'}:
+                  <HeartOutlined className='icon' /> {t('profile.gender')}:
                 </Text>
               </Col>
 
@@ -155,12 +157,12 @@ console.log(JSON.parse(localStorage.getItem('user-info')).avatar)
                 <Controller
                   name='gender'
                   // defaultValue={currentUser?.gender.toString()}
-                  defaultValue={JSON.parse(localStorage.getItem('user-info')).gender}
+                  defaultValue={JSON.parse(localStorage.getItem('user-info'))?.gender}
                   control={control}
                   render={({ field }) => (
                     <Radio.Group className='radio-gender' {...field}>
-                      <Radio value={1}> {'Male'}</Radio>
-                      <Radio value={2}>{'Female'}</Radio>
+                      <Radio value={1}> {t('profile.male')}</Radio>
+                      <Radio value={2}>{t('profile.female')}</Radio>
                     </Radio.Group>
                   )}
                 />
@@ -174,7 +176,7 @@ console.log(JSON.parse(localStorage.getItem('user-info')).avatar)
             </Row>
 
             <FormInput
-              label={'Address'}
+              label={t('profile.address')}
               name='address'
               defaultValue='address'
               control={control}
@@ -185,7 +187,7 @@ console.log(JSON.parse(localStorage.getItem('user-info')).avatar)
 
             <Row>
               <Col span={24} className='button-save'>
-                <Button type='primary' htmlType='submit'>Save Change</Button>
+                <Button type='primary' htmlType='submit'>{t('profile.save_change')}</Button>
               </Col>
             </Row>
           </Form>
