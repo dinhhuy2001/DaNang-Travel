@@ -1,109 +1,78 @@
-import React from "react";
-import styled from "styled-components";
-import img1 from "../assets/cafe.jpg";
-import img2 from "../assets/restaurant.jpg";
-import img3 from "../assets/hotel.jpeg";
-import img4 from "../assets/market.jpg";
-import img5 from "../assets/bar.jpg";
-import img6 from "../assets/pub.jpg";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
+import { api, api_image } from '../API/api';
+import Slider from 'react-slick';
+import imgDN from '../assets/danang.jpg';
 
 export default function Top() {
-  const data = [
-    {
-      icon: img1,
-      title: "Caffee",
-      subTitle:
-        "3 Location",
-    },
-    {
-      icon: img2,
-      title: "Restaurant",
-      subTitle:
-        "4 Location",
-    },
-    {
-      icon: img3,
-      title: "Hotel",
-      subTitle:
-        "5 Location",
-    },
-    {
-      icon: img4,
-      title: "Supermarket",
-      subTitle:
-        "7 Location",
-    },
-    {
-      icon: img5,
-      title: "Bar",
-      subTitle:
-        "2 Location",
-    },
-    {
-      icon: img6,
-      title: "Pub",
-      subTitle:
-        "1 Location",
-    },
-  ];
-  return (
-    <Section id="top">
-      <div id="title" style={{ textAlign: "center", marginTop: "2rem" }}>
-        <h2>Top destinations</h2>
-      </div>
-      <div className="destinations">
-        {data.map((service, index) => {
-          return (
-
-            <div className="destination">
-              <div className="icon">
-                <img src={service.icon} alt="" />
-              </div>
-              <h3>{service.title}</h3>
-              <p>{service.subTitle}</p>
-            </div>
-          );
-        })}
-      </div>
-    </Section>
-  );
-}
-
-const Section = styled.section`
-  padding: 2rem 0;
-  .title {
-    text-align: center;
-  }
-  .destinations {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1rem;
-    margin: 2rem 0;
-    .destination {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      padding: 2rem 0;
-      background-color: aliceblue;
-      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-      transition: 0.3s ease-in-out;
-      text-align: center;
-      font-size: 15px;
-      &:hover {
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-      }
-      .icon {
-        img {
-          width: 100px;
-          height: 100px;
-          border-radius: 50%;
+  const [category, setCategory] = useState();
+  const [isRequestAPI, setIsRequestAPI] = useState(false);
+  const settings = {
+    speed: 200,
+    slidesToShow: 6,
+    slidesToScroll: 6,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
         }
       }
+    ]
+  };
+
+  const getListCategory = () => {
+    if (!isRequestAPI) {
+      const URL = api + 'api/category';
+      setIsRequestAPI(true);
+      axios
+        .get(URL)
+        .then((res) => {
+          setCategory(res.data);
+          setIsRequestAPI(false);
+        })
+        .catch((err) => {
+          setIsRequestAPI(false);
+        });
     }
-  }
-  @media screen and (min-width: 280px) and (max-width: 720px) {
-    .destinations {
-      grid-template-columns: 1fr;
-    }
-  }
-`;
+  };
+
+  useEffect(() => {
+    getListCategory();
+  }, []);
+
+  return (
+    <section className='section-top'>
+      <div className='container'>
+        <h2 className='txt-title txt-center mb-5'>Top destinations</h2>
+        <div className='destination-list'>
+          <Slider {...settings}>
+            {category?.map((item) => {
+              return (
+                <div className='destination-item'>
+                  <div className='destination-image'>
+                    <img
+                      src={item.image !== '' ? api_image + item.image : imgDN}
+                      alt=''
+                    />
+                  </div>
+                  <h3 className='destination-title'>{item.name}</h3>
+                </div>
+              );
+            })}
+          </Slider>
+        </div>
+      </div>
+    </section>
+  );
+}

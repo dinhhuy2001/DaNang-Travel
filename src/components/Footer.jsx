@@ -1,8 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { BsLinkedin, BsFacebook } from "react-icons/bs";
-import { AiFillInstagram } from "react-icons/ai";
-
 import IconFacebook from "../assets/icons/facebook.png";
 import IconTwitter from "../assets/icons/twitter.png";
 import IconInstagram from "../assets/icons/instagram.png";
@@ -58,11 +55,9 @@ export default function Footer() {
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding-top: 70px;
-  /* background: red; */
+  justify-content: space-around;
+  padding-top: 90px;
+  background: #F7F8FA; 
 `;
 
 export const Column = styled.div`
@@ -72,12 +67,17 @@ export const Column = styled.div`
 `;
 
 export const Row = styled.div`
+  max-width: 1406px;
+  width: 100%;
+  padding: 0 15px 50px 15px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
-  grid-gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
+  border-bottom: 1px solid #D9D9D9;
 
-  @media (max-width: 1000px) {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  @media screen and (min-width: 280px) and (max-width: 768px) {
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -98,11 +98,7 @@ export const FooterLink = styled.a`
 export const FooterSocial = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
-  grid-gap: 20px;
-
-  @media (max-width: 1000px) {
-    grid-template-columns: repeat(auto-fill, minmax(20px, 1fr));
-  }
+  grid-gap: 1rem;
 `;
 
 export const Heading = styled.p`
@@ -113,9 +109,8 @@ export const Heading = styled.p`
   margin-bottom: 20px;
 `;
 export const CopyrightWrapper = styled.p`
-  border-top: 0.5px solid #727272;
   text-align: center;
-  padding-top: 30px;
+  padding: 30px;
   font-size: 14px;
   color: #727272;
   font-weight: 400;
