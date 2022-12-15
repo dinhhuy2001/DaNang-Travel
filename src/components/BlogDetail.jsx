@@ -314,8 +314,6 @@ export default function BlogDetail() {
 							</div>
 						);
 					})}
-
-                <h4>{item.number}</h4>
               </div>
         </div>
         <div className="card">
