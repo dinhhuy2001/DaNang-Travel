@@ -24,7 +24,7 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 1; /* number of lines to show */
-            line-clamp: 1; 
+    line-clamp: 1;
     -webkit-box-orient: vertical;
     a {
       font-size: 20px;
@@ -39,7 +39,7 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 1; /* number of lines to show */
-            line-clamp: 1; 
+    line-clamp: 1;
     -webkit-box-orient: vertical;
   }
   &-desc {
@@ -53,17 +53,16 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 3; /* number of lines to show */
-            line-clamp: 3; 
+    line-clamp: 3;
     -webkit-box-orient: vertical;
   }
-
-  .rating {
-    &-list {
-      display: flex;
-      margin-bottom: 8px;
-    }
-    &-item {
-      margin-right: 4px;
-    }
+}
+.rating {
+  &-list {
+    display: flex;
+    margin-bottom: 8px;
+  }
+  &-item {
+    margin-right: 4px;
   }
 }
