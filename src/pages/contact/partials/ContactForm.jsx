@@ -4,15 +4,16 @@ import {
   HiOutlinePhone,
   HiOutlineMail,
 } from 'react-icons/hi';
-
+import { useTranslation } from 'react-i18next';
 const ContactForm = () => {
+  const {t}= useTranslation()
   return (
     <section className="section-contact">
       <div className="container">
         <div className="contact-wrapper row">
           <div className="col-6">
             <div className="contact-left">
-              <h3 className="contact-title">Contact Information</h3>
+              <h3 className="contact-title">{t('contact.contact_info')}</h3>
               <p className="contact-desc">
                 Hi everybody. My team's name is Bach Khoa Circus. Contact the team at
                 the information below.
@@ -35,7 +36,7 @@ const ContactForm = () => {
           </div>
           <div className="col-6">
             <div className="contact-right">
-              <h3 className="contact-title">Send a message</h3>
+              <h3 className="contact-title">{t('contact.send_message')}</h3>
               <form className="form-contact">
                 <div className="row">
                   <div className="col-6">
@@ -43,7 +44,7 @@ const ContactForm = () => {
                       <input
                         type="text"
                         className="form-input"
-                        placeholder="Your name"
+                        placeholder={t('contact.your_name')}
                       />
                     </div>
                   </div>
@@ -52,7 +53,7 @@ const ContactForm = () => {
                       <input
                         type="text"
                         className="form-input"
-                        placeholder="Phone number"
+                        placeholder={t('contact.phone_number')}
                       />
                     </div>
                   </div>
@@ -61,18 +62,18 @@ const ContactForm = () => {
                   <input
                     type="text"
                     className="form-input"
-                    placeholder="Your email"
+                    placeholder={t('contact.your_email')}
                   />
                 </div>
                 <div className="form-group">
                   <textarea
                     rows="8"
                     cols="50"
-                    placeholder="Message"
+                    placeholder={t('contact.message')}
                     className="form-input"
                   ></textarea>
                 </div>
-                <button className="btn btn-primary">Submit</button>
+                <button className="btn btn-primary">{t('contact.submit')}</button>
               </form>
             </div>
           </div>

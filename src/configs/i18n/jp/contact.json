@@ -1,0 +1,12 @@
+{
+    "contact": {
+      "send_message": "メッセージを送ります",
+      "your_name": "あなたの名前",
+      "phone_number": "電話番号",
+      "your_email": "あなたのメール",
+      "message": "メッセージ",
+      "contact_info": "連絡先",
+      "submit": "送信"
+    }
+  }
+  
