@@ -7,7 +7,6 @@ import Recommend from '../../components/Recommend';
 import ScrollToTop from '../../components/ScrollToTop';
 import Top from '../../components/Top';
 import Subcribe from '../../components/Subcribe';
-import Plan from '../../components/Plan';
 
 const Home = () => {
   return (
@@ -17,7 +16,6 @@ const Home = () => {
       <Hero />
       <Ads />
       <Top />
-      <Plan />
       <Recommend />
       <Subcribe />
       <Footer />
