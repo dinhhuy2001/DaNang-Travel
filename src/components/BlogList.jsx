@@ -1,11 +1,10 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import styled from "styled-components";
-import { api, api_image } from "../API/api";
-import img1 from "../assets/profile/defaultImg.png";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import styled from 'styled-components';
+import { api, api_image } from '../API/api';
+import img1 from '../assets/profile/defaultImg.png';
 import imgDN from '../assets/danang.jpg';
-import { StarFilled } from '@ant-design/icons';
 
 import { useTranslation } from 'react-i18next';
 
@@ -20,7 +19,6 @@ export default function BlogList() {
   useEffect(() => {
     const URL = api + 'api/category';
     axios.get(URL).then((res) => {
-      console.log(res.data);
       setCategory(res.data);
     });
   }, []);
@@ -29,6 +27,7 @@ export default function BlogList() {
     const URL = api + 'api/blog';
     axios.get(URL).then((res) => {
       setPopulars(res.data);
+
     });
   }, []);
 
@@ -36,34 +35,12 @@ export default function BlogList() {
     const URL = api + `api/blogByCateFull?category_id=${categoryId}`;
     axios.get(URL).then((res) => {
       setBlog(res.data);
+      console.log(res.data)
     });
   }, [categoryId]);
 
-  const renderRating = (rating) => {
-    if (!rating) {
-      return (
-        <ul className='rating-list'>
-          {[...Array(5).keys()].map((item) => (
-            <li className='rating-item'>
-              <StarFilled style={{ fontSize: '14px', color: '#eaeef3' }} />
-            </li>
-          ))}
-        </ul>
-      );
-    }
-    return (
-      <ul className='rating-list'>
-        {[...Array(rating).keys()].map((item) => (
-          <li className='rating-item'>
-            <StarFilled style={{ fontSize: '14px', color: '#DA6938' }} />
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
   return (
-    <Section id='recommend'>
+    <Section className='section-bloglist'>
       <ul class='breadcrumb'>
         <li>
           <a href='/home'>{t('blog.home')}</a>
@@ -105,7 +82,9 @@ export default function BlogList() {
                       />
                     </div>
                     <div className='post-content'>
-                      {renderRating(post?.rating)}
+                      <div className="post-category">
+                        <p>{post?.category?.name}</p>
+                      </div>
                       <h3 className='post-name'>{post?.name}</h3>
                       <p className='post-desc'>{post?.description}</p>
                       <div className='post-info'>
@@ -176,18 +155,21 @@ export default function BlogList() {
                 </ul>
               </div>
               <div className='sidebar-card'>
-                <h3 className='sidebar-card-title'>Popular posts</h3>
+                <h3 className='sidebar-card-title'>{t('blog.popular_post')}</h3>
                 <ul className='sidebar-post-list'>
                   {populars?.map((post) => {
                     return (
                       <li className='sidebar-post-item'>
-                        <a href={`/blog/${post.id}`} className='sidebar-post-link'>
+                        <a
+                          href={`/blog/${post.id}`}
+                          className='sidebar-post-link'
+                        >
                           <div class='sidebar-post-image'>
                             <img src={post.image} alt={post.name} />
                           </div>
                           <div class='sidebar-post-content'>
-                            <h4 className="sidebar-post-name">{post.name}</h4>
-                            <p className="sidebar-post-date">
+                            <h4 className='sidebar-post-name'>{post.name}</h4>
+                            <p className='sidebar-post-date'>
                               {new Date(post.updated_at).toLocaleDateString(
                                 [],
                                 {
@@ -215,7 +197,6 @@ export default function BlogList() {
 const Section = styled.section`
   .breadcrumb {
     padding: 10px 30px;
-    background-color: white;
     border-bottom: 1px solid #dedede;
     li {
       display: inline;

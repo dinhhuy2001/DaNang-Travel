@@ -15,8 +15,7 @@ const ContactForm = () => {
             <div className="contact-left">
               <h3 className="contact-title">{t('contact.contact_info')}</h3>
               <p className="contact-desc">
-                Hi everybody. My team's name is Bach Khoa Circus. Contact the team at
-                the information below.
+              {t('contact.introduction')}
               </p>
               <ul className="contact-info">
                 <li className="contact-info-item">
