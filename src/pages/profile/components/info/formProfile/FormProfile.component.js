@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useRef, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 // import { yupResolver } from '@hookform/resolvers/yup';
 import {
   UserOutlined,
@@ -9,19 +9,19 @@ import {
   HeartOutlined,
   AuditOutlined,
   EditOutlined,
-} from '@ant-design/icons';
-import { Row, Col, Radio, Form, Image, Typography, Spin, Button } from 'antd';
+} from "@ant-design/icons";
+import { Row, Col, Radio, Form, Image, Typography, Spin, Button } from "antd";
 
-import { PrimaryButton } from '../../../../../components/button';
-import FormInput from '../../../../../components/input';
+import { PrimaryButton } from "../../../../../components/button";
+import FormInput from "../../../../../components/input";
 // import { upload } from '../../../../../config/firebase/firebase';
-import { ProfileSchema } from '../../../schema/Schema';
-import DefaultImg from '../../../../../assets/profile/defaultImg.png';
-import { WrapperForm, ValidationError } from './styled';
-import axios from 'axios';
-import { api, api_image } from '../../../../../API/api';
-import { useTranslation } from 'react-i18next';
-import { t } from 'i18next';
+import { ProfileSchema } from "../../../schema/Schema";
+import DefaultImg from "../../../../../assets/profile/defaultImg.png";
+import { WrapperForm, ValidationError } from "./styled";
+import axios from "axios";
+import { api, api_image } from "../../../../../API/api";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 export default function FormProfile() {
   const { Text } = Typography;
@@ -48,18 +48,22 @@ export default function FormProfile() {
 
   const onSubmit = (data) => {
     console.log(data);
-    axios.post(api+"api/editprofile/"+ (JSON.parse(localStorage.getItem("user-info"))?.id),data,
-    {
-      headers : {
-        "Content-Type": "multipart/form-data",
-    }
-  } 
-    ).then(
-      res => {
-        console.log(res.data)
-        localStorage.setItem('user-info', JSON.stringify(res.data))
-      }
-    )
+    axios
+      .post(
+        api +
+          "api/editprofile/" +
+          JSON.parse(localStorage.getItem("user-info"))?.id,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        localStorage.setItem("user-info", JSON.stringify(res.data));
+      });
     // delete data.email;
     // updateUser({ data, callbackSuccess: updateInfoSuccess, callbackFail: updateInfoFail });
   };
@@ -75,123 +79,81 @@ export default function FormProfile() {
     //   .finally(() => setIsUpload(false));
     setIsUpload(false);
   };
-console.log(JSON.parse(localStorage.getItem('user-info'))?.avatar)
+  console.log(JSON.parse(localStorage.getItem("user-info"))?.avatar);
   return (
     <WrapperForm>
       {/* {currentUser ? (
         <Spin spinning={isLoading || isUpload} delay={500}> */}
-          <Form className='form' onFinish={handleSubmit(onSubmit)}>
-            <Row justify='center' align='middle' gutter={24}>
-              <Col xl={6} sm={24} xs={24} className='flex-avatar'>
-                <Image
-                  src={JSON.parse(localStorage.getItem('user-info'))?.avatar !== null
-                    ? api_image+ JSON.parse(localStorage.getItem('user-info'))?.avatar 
-                    : DefaultImg}
-                  // src={DefaultImg}
-                  alt='Avatar'
-                  className='avatar-view'
-                />
-                <EditOutlined
-                  onClick={() => {
-                    inputRef.current.click();
-                  }}
-                />
-                <input
-                  className='upload-file'
-                  ref={inputRef}
-                  type='file'
-                  // onChange={handleChange}
-                  accept='image/gif, image/jpeg, image/png'
-                />
-              </Col>
+      <Form className="form" onFinish={handleSubmit(onSubmit)}>
+        <FormInput
+          label={t("profile.name")}
+          name="name"
+          defaultValue={JSON.parse(localStorage.getItem("user-info"))?.username}
+          control={control}
+          errors={errors?.username?.message}
+          Icon={UserOutlined}
+        />
+        <FormInput
+          label={t("profile.email")}
+          name="email"
+          defaultValue={JSON.parse(localStorage.getItem("user-info"))?.email}
+          control={control}
+          errors={errors?.email?.message}
+          Icon={MailOutlined}
+          disabled={true}
+        />
+        <FormInput
+          label={t("profile.phone_number")}
+          name="phone"
+          defaultValue={JSON.parse(localStorage.getItem("user-info"))?.phone}
+          control={control}
+          errors={errors?.phoneNumber?.message}
+          Icon={PhoneOutlined}
+        />
 
-              <Col xl={18} sm={24} xs={24}>
-                <FormInput
-                  label={t('profile.name')}
-                  name='name'
-                  defaultValue={JSON.parse(localStorage.getItem('user-info'))?.username}
-                  control={control}
-                  errors={errors?.username?.message}
-                  Icon={UserOutlined}
-                />
-                <FormInput
-                  label={t('profile.email')}
-                  name='email'
-                  defaultValue={JSON.parse(localStorage.getItem('user-info'))?.email}
-                  control={control}
-                  errors={errors?.email?.message}
-                  Icon={MailOutlined}
-                  disabled={true}
-                />
-                <FormInput
-                  label={t('profile.phone_number')}
-                  name='phone'
-                  defaultValue={JSON.parse(localStorage.getItem('user-info'))?.phone}
-                  control={control}
-                  errors={errors?.phoneNumber?.message}
-                  Icon={PhoneOutlined}
-                />
-              </Col>
-            </Row>
 
-            <FormInput
-              label={t('profile.birth_date')}
-              name='birthdate'
-              // defaultValue={currentUser?.birthdate}
-              // defaultValue={JSON.parse(localStorage.getItem('user-info')).birth}
+        <Row justify="center" align="middle">
+          <Col xl={6} sm={24} xs={24}>
+            <Text className="form__label">
+              <HeartOutlined className="icon" /> {t("profile.gender")}:
+            </Text>
+          </Col>
+
+          <Col xl={18} sm={24} xs={24}>
+            <Controller
+              name="gender"
+              // defaultValue={currentUser?.gender.toString()}
+              defaultValue={
+                JSON.parse(localStorage.getItem("user-info"))?.gender
+              }
               control={control}
-              errors={errors?.birthdate?.message}
-              Icon={CalendarOutlined}
-              span={20}
-              type='date'
+              render={({ field }) => (
+                <Radio.Group className="radio-gender" {...field}>
+                  <Radio value={1}> {t("profile.male")}</Radio>
+                  <Radio value={2}>{t("profile.female")}</Radio>
+                </Radio.Group>
+              )}
             />
+          </Col>
+        </Row>
 
-            <Row justify='center' align='middle'>
-              <Col xl={4} sm={24} xs={24}>
-                <Text className='form__label'>
-                  <HeartOutlined className='icon' /> {t('profile.gender')}:
-                </Text>
-              </Col>
+        <Row>
+          <Col xl={{ span: 20, offset: 4 }} sm={24} xs={24}>
+            <ValidationError>
+              {errors.gender && errors.gender?.message}
+            </ValidationError>
+          </Col>
+        </Row>
 
-              <Col xl={20} sm={24} xs={24}>
-                <Controller
-                  name='gender'
-                  // defaultValue={currentUser?.gender.toString()}
-                  defaultValue={JSON.parse(localStorage.getItem('user-info'))?.gender}
-                  control={control}
-                  render={({ field }) => (
-                    <Radio.Group className='radio-gender' {...field}>
-                      <Radio value={1}> {t('profile.male')}</Radio>
-                      <Radio value={2}>{t('profile.female')}</Radio>
-                    </Radio.Group>
-                  )}
-                />
-              </Col>
-            </Row>
-
-            <Row>
-              <Col xl={{ span: 20, offset: 4 }} sm={24} xs={24}>
-                <ValidationError>{errors.gender && errors.gender?.message}</ValidationError>
-              </Col>
-            </Row>
-
-            <FormInput
-              label={t('profile.address')}
-              name='address'
-              defaultValue='address'
-              control={control}
-              errors={errors?.address?.message}
-              Icon={AuditOutlined}
-              span={20}
-            />
-
-            <Row>
-              <Col span={24} className='button-save'>
-                <Button type='primary' htmlType='submit'>{t('profile.save_change')}</Button>
-              </Col>
-            </Row>
-          </Form>
-        {/* </Spin>
+        <Row>
+          <Col span={24} className="button-save">
+            <Button type="primary" htmlType="submit">
+              {t("profile.save_change")}
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+      {/* </Spin>
       ) : null} */}
     </WrapperForm>
   );
