@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 // import { yupResolver } from '@hookform/resolvers/yup';
 import { Row, Col, Typography, Form, Checkbox, Space, Spin, Button } from 'antd';
 
 import { ChangePasswordSchema } from './schema';
 import FormInput from '../../components/input';
 import { Wrapper } from './styled';
+import { api } from '../../API/api';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function ChangePassword() {
   const { Title } = Typography;
@@ -30,6 +33,19 @@ export default function ChangePassword() {
 
   const onSubmit = (data) => {
     console.log(data)
+    axios.post(api + "api/changepassword", data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
+      }
+    ).then(
+      res => {
+        console.log(res.data)
+        toast.success('password change success!')
+        // localStorage.setItem('user-info', JSON.stringify(res.data))
+      }
+    )
     // updatePassword({
     //   data,
     //   callbackSuccess: updatePasswordSuccess,
@@ -47,9 +63,17 @@ export default function ChangePassword() {
             </Col>
 
             <Col span={16} offset={4}>
+              <FormInput  
+                name='user_id'
+                defaultValue={JSON.parse(localStorage.getItem('user-info')).id}
+                disabled={true}
+                control={control}
+                type='hidden'
+                errors={errors?.username?.message}
+              />
               <FormInput
                 label={'New Password'}
-                name='password'
+                name='new_password'
                 control={control}
                 errors={errors?.password?.message}
                 type={isHide ? 'password' : 'text'}
@@ -74,7 +98,7 @@ export default function ChangePassword() {
 
                 <Row>
                   <Col xl={{ span: 18, offset: 6 }} sm={24} xs={24} className='form__btn'>
-                    <Button>Save Change</Button>
+                    <Button htmlType='submit'>Save Change</Button>
                   </Col>
                 </Row>
               </Space>

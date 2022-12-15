@@ -7,6 +7,7 @@ import axios from 'axios'
 import {authAPi} from './api.js'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { api } from '../../API/api';
 
 
 export default function Login() {
@@ -38,7 +39,7 @@ export default function Login() {
                     "password":loginpassword
                 }
                 console.log("email")
-                axios.post(authAPi.loginapi, data,
+                axios.post(api + "api/login", data,
                     {
                         headers:{
                             "Content-Type" : "application/json",
@@ -52,6 +53,7 @@ export default function Login() {
                     routeChange()
                 }).catch(error => {
                     console.log(error)
+                    toast.error('wrong password or username or email!')
                 })
             } else {
                 console.log("username")
@@ -60,7 +62,7 @@ export default function Login() {
                     "password":loginpassword
                 }
                 console.log(data)
-                axios.post(authAPi.loginapi, data,
+                axios.post(api + "api/login", data,
                     {
                         headers:{
                             "Content-Type" : "application/json",
@@ -100,7 +102,7 @@ export default function Login() {
                 "password":password,
             }
 
-            axios.post(authAPi.registerapi, data,
+            axios.post(api + "api/register", data,
                 {
                     headers:{
                         "Content-Type" : "application/json",

@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { api, api_image } from "../API/api";
 import Destination1 from "../assets/Destination1.png";
 import img1 from "../assets/Long.png";
+import imgDN from '../assets/danang.jpg';
+
 import { useTranslation } from "react-i18next";
 
 export default function BlogList() {
@@ -12,28 +14,41 @@ export default function BlogList() {
   const [category, setCategory] = useState()
   const [categoryId, setCategoryId] = useState(1)
   const [blog, setBlog] = useState([])
+  const [search, setSearch]= useState("")
+  const [populars, setPopulars]= useState([])
   const navigate = useNavigate()
-  useEffect(()=>{
+  useEffect(() => {
     const URL = api + "api/category"
     axios.get(URL)
-    .then(
-      res => {
-        console.log(res.data)
-        setCategory(res.data)
-      }
-    )
-  },[])
+      .then(
+        res => {
+          console.log(res.data)
+          setCategory(res.data)
+        }
+      )
+  }, [])
 
-  useEffect(()=>{
-    const URL = api + `api/blogByCate?category_id=${categoryId}`
+  useEffect(() => {
+    const URL = api + "api/blog"
     axios.get(URL)
-    .then(
-      res => {
-        console.log(res.data)
-        setBlog(res.data)
-      }
-    )
-  },[categoryId])
+      .then(
+        res => {
+          console.log(res.data)
+          setPopulars(res.data)
+        }
+      )
+  }, [])
+
+  useEffect(() => {
+    const URL = api + `api/blogByCateFull?category_id=${categoryId}`
+    axios.get(URL)
+      .then(
+        res => {
+          console.log(res.data)
+          setBlog(res.data)
+        }
+      )
+  }, [categoryId])
   const data = [
     {
       image: Destination1,
@@ -76,7 +91,7 @@ export default function BlogList() {
       title: "Meet the Steve Jobs of the Travel Industry",
       subTitle: "May 6, 2022",
     }
-  ] 
+  ]
 
   const categories = [
     {
@@ -96,7 +111,7 @@ export default function BlogList() {
       number: "2",
     }
   ]
-  const tags = ["Content","Offers","Promotion","SEO","Social media"]
+  const tags = ["Content", "Offers", "Promotion", "SEO", "Social media"]
 
   const [active, setActive] = useState(1);
   return (
@@ -105,21 +120,38 @@ export default function BlogList() {
         <li><a href="/home">{t('blog.home')}</a></li>
         <li>{t('blog.blog')}</li>
       </ul>
-      
+
       <div className="posts">
-        {blog.data?.map((post) => {
+        {blog
+        ?.filter(val=>{
+          if(search===""){return val}
+          else if(val.name.toLowerCase().includes(search.toLocaleLowerCase())){
+            return val
+          }
+        })
+        ?.map((post) => {
           return (
-            <div className="post" style={{cursor:"pointer"}} onClick={()=>{
-              navigate(`/blog/${post.id}`);
-              }}>
-              <img src={api_image+post.image} alt="" />
+            <div className="post" style={{ cursor: "pointer" }}
+              onClick={() => {
+                navigate(`/blog/${post.id}`);
+              }}
+            >
+              <img src={
+                // api_image+post.image
+                (post?.image !== null ?? post?.image !== "") ? ((post?.image?.includes('http')) ? post?.image : api_image + post?.image) : imgDN
+              } alt="" />
               <div class="tag">Coffee</div>
               <h3>{post.name}</h3>
               <p>{post.description}</p>
               <div className="info">
-                <img src={post.avatar == null ? img1: api_image+ post.avatar}alt=""/>
-                  <span>BY</span><h3>{post.author}</h3>
-                <span>{new Date(post.updated_at).toLocaleDateString([],{ year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                <img src={
+                  // post.avatar == null ? img1: api_image+ post.avatar
+                  // (post.image !== ''  ?? post.image !== null) ? ( ( post.image.includes('http')) ?  post.image:api_image + post.image ) : imgDN
+
+                  (post.user?.avatar !== null ?? post.user?.avatar !== "") ? ((post.user?.avatar?.includes('http')) ? post.user?.avatar : api_image + post.user?.avatar) : img1
+                } alt="" />
+                <span>BY</span><h3>{post.author}</h3>
+                <span>{new Date(post.updated_at).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}</span>
               </div>
             </div>
           );
@@ -129,7 +161,11 @@ export default function BlogList() {
         <div className="card">
           <h3>{t('blog.search')}</h3>
           <form >
-            <input type="text" placeholder={t('blog.search')} name="search"/>
+            <input type="text" placeholder="Search.."
+              onChange={(e)=>{
+                setSearch(e.target.value)
+              }}
+            name="search" />
             <button type="submit"><i class="fa fa-search"></i></button>
           </form>
         </div>
@@ -137,38 +173,44 @@ export default function BlogList() {
           <h3>{t('blog.categories')}</h3>
           {category?.map((item) => {
             return (
-              <div style={{cursor: "pointer"}} className="cat-item"
-              onClick={
-                ()=>{
-                  console.log(item.id)
-                  setCategoryId(item.id)
+              <div style={{ cursor: "pointer" }} className="cat-item"
+                onClick={
+                  () => {
+                    console.log(item.id)
+                    setCategoryId(item.id)
+                  }
                 }
-              }
               >
                 <div className="item-name">
                   <h4>{item.name}</h4>
-                  </div>
+                </div>
 
-                  <h4>{item.number}</h4>
+                <h4>{item.number}</h4>
               </div>
-          );})}
-          
+            );
+          })}
+
         </div>
         <div className="card">
-          <h3>{t('blog.popular_post')}</h3>
-          {popular.map((post) => {
+          <h3>Popular posts</h3>
+          {populars?.map((post) => {
             return (
-              <div className="post">
+              <div className="post"
+                onClick={() => {
+                  navigate(`/blog/${post.id}`);
+                }}
+              >
                 <div class="post-image">
-                  <img src={post.image} alt=""/>
+                  <img src={post.image} alt="" />
                 </div>
                 <div class="post-content">
-                  <h4>{post.title}</h4>
-                  <p>{post.subTitle}</p>
+                  <h4>{post.name}</h4>
+                  <p>{new Date(post.updated_at).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                 </div>
               </div>
-          );})}
-          
+            );
+          })}
+
         </div>
         {/* <div className="card">
           <h3>Tags</h3>
