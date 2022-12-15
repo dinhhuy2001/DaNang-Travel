@@ -127,7 +127,7 @@ export default function Top() {
 
       <section className='section-plan'>
         <div className='container'>
-          <h2 className='txt-title txt-center mb-5'>Top destinations</h2>
+          <h2 className='txt-title txt-center mb-5'>{t('home.top_destination')}</h2>
           <div className='plan-wrapper'>
             <ul className='plan-list row'>
               {blog?.data?.map((item) => {
