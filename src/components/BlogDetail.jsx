@@ -11,15 +11,19 @@ import { api, api_image } from "../API/api";
 export default function BlogDetail() {
 	const params = useParams();
 	const [blogdata,setBlogdata] = useState()
-	// useEffect(()=>{
-	// 	const URL2 = api + `api/blog/${params.id}`
-	// 	axios.get(URL2)
-	// 	.then(
-	// 		res=>{
-	// 			console.log(res.data)
-	// 		}
-	// 	)
-	// },[])
+	const [comments,setComments] = useState()
+	const [clickCmt,setClickCmt] = useState(0)
+	const [commentbody,setCommentbody] = useState()
+	useEffect(()=>{
+		const URL2 = api + `api/blog/comments/${params.id}`
+		axios.get(URL2)
+		.then(
+			res=>{
+				console.log(res.data)
+				setComments(res.data)
+			}
+		)
+	},[clickCmt])
 	useEffect(()=>{
 		const URL = api + `api/blog/${params.id}`
 		axios.get(URL)
@@ -94,10 +98,11 @@ export default function BlogDetail() {
 			<div className="posts">
 				<div className="post">
 					<img src={api_image + blogdata?.image} alt="" />
-					<div className="tag">Coffee</div>
+					<div className="tag">{blogdata?.category?.name}</div>
 					<div className="star-rating">
 						{[...Array(5)].map((star, index) => {
 							index += 1;
+							console.log(index) 
 							return (
 								<button type="button" key={index} className={index <= blogdata?.rating ? "on" : "off"}>
 									<span className="star" >&#9733;</span>
@@ -107,15 +112,15 @@ export default function BlogDetail() {
 					</div>
 					<h3>{blogdata?.name}</h3>
 					<div className="info">
-						<img src={blogdata?.avatar == null ? img1: api_image+ blogdata?.avatar} alt="" />
-						<span>BY</span><h3>{blogdata?.author}</h3>
+						<img src={blogdata?.user?.avatar == null ? img1: api_image+ blogdata?.user?.avatar} alt="" />
+						<span>BY</span><h3>{blogdata?.user?.name}</h3>
 						<span>{new Date(blogdata?.updated_at).toLocaleDateString([],{ year: 'numeric', month: 'long', day: 'numeric' })}</span>
 					</div>
 					<p>{blogdata?.description}</p>
 					{/* <p>{blogdata.body}</p>
 					<p>{blogdata.body}</p> */}
 				</div>
-				<div className="pagination">
+				{/* <div className="pagination">
 					<div className="pagination-item">
 						<div className="post-image">
 							<img src={post.image} alt="" />
@@ -134,36 +139,38 @@ export default function BlogDetail() {
 							<h4>{post.title}</h4>
 						</div>
 					</div>
-				</div>
+				</div> */}
 				<div className="comments-wrapper section-inner">
 					<div className="comments" id="comments">
 						<div className="comments-header section-inner small max-percentage">
 							<h2 className="comment-reply-title">
-								1 Comment
+							{comments?.length} Comment
 							</h2>
 						</div>
 						{
-						<div className="comments-inner section-inner thin max-percentage">
-							<div id="comment-1" className="comment even thread-even depth-1">
-								<article id="div-comment-1" className="comment-body">
-									<footer className="comment-meta">
-										<div className="comment-author vcard">
-											<a href="" rel="external nofollow" className="url">
-												<img src={comment.avatar} alt="" /><span className="fn">{comment.author}</span>
-											</a>
-											<span className="screen-reader-text says">{" says:"}</span>
-										</div>
-										<div className="comment-metadata">{comment.date}</div>
-									</footer>
-									<div className="comment-content entry-content">
-										<p>{comment.content}</p>
+							comments?.map((item)=>(
+								<div className="comments-inner section-inner thin max-percentage">
+									<div id="comment-1" className="comment even thread-even depth-1">
+										<article id="div-comment-1" className="comment-body">
+											<footer className="comment-meta">
+												<div className="comment-author vcard">
+													<a href="" rel="external nofollow" className="url">
+														<img src={item?.user?.avatar == null ? img2 : api_image+item?.user?.avatar} alt="" /><span className="fn">{item?.user?.name}</span>
+													</a>
+													<span className="screen-reader-text says">{" says:"}</span>
+												</div>
+												<div className="comment-metadata">{new Date(item?.updated_at).toLocaleDateString([],{ year: 'numeric', month: 'long', day: 'numeric' })}</div>
+											</footer>
+											<div className="comment-content entry-content">
+												<p>{item?.body}</p>
+											</div>
+											<footer className="comment-footer-meta">
+												<span className="comment-reply"><a rel='nofollow' class='do-not-scroll comment-reply-link' href='' data-commentid="1" data-postid="1" data-belowelement="div-comment-1" data-respondelement="respond" aria-label='Reply to A WordPress Commenter'>Reply</a></span>
+											</footer>
+										</article>
 									</div>
-									<footer className="comment-footer-meta">
-										<span className="comment-reply"><a rel='nofollow' class='do-not-scroll comment-reply-link' href='' data-commentid="1" data-postid="1" data-belowelement="div-comment-1" data-respondelement="respond" aria-label='Reply to A WordPress Commenter'>Reply</a></span>
-									</footer>
-								</article>
-							</div>
-						</div>
+								</div>
+							))
 						}
 
 					</div>
@@ -173,9 +180,15 @@ export default function BlogDetail() {
 						<form action="" method="post" id="commentform" className="section-inner thin max-percentage" novalidate>
 							<p className="comment-form-comment">
 								<label for="comment">Comment</label>
-								<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea>
+								<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"
+									value={commentbody}
+									onChange={(e)=> {
+										setCommentbody(e.target.value)
+										console.log(commentbody)
+									}}
+								></textarea>
 							</p>
-							<p className="comment-form-author">
+							{/* <p className="comment-form-author">
 								<label for="author">Name <span className="required">*</span></label>
 								<input id="author" name="author" type="text" size="30" maxlength="245" required='required' />
 							</p>
@@ -185,10 +198,29 @@ export default function BlogDetail() {
 							</p>
 							<p className="comment-form-cookies-consent">
 								<input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" />
-								<label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+								<label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p> */}
 							<p className="form-submit">
-								<input name="submit" type="submit" id="submit" className="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='1' id='comment_post_ID' />
-								<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+								<input name="submit" style={{cursor:"pointer"}} type="button" id="submit" className="submit" value="Post Comment"
+									onClick={()=>{
+										console.log('comment')
+										const URL3 = api + `api/comment/add/${params.id}`
+										if(commentbody != "" || commentbody != null){
+											axios.post(URL3,
+												{
+													user_id: JSON.parse(localStorage.getItem('user-info'))['id'],
+													body: commentbody
+												}
+												)
+											.then(
+												res => {
+													console.log(res.data)
+													setClickCmt(clickCmt+1)
+												}
+											)
+										}
+									}}
+								/> <input type='hidden' name='comment_post_ID' value='1' id='comment_post_ID' />
+								{/* <input type='hidden' name='comment_parent' id='comment_parent' value='0' /> */}
 							</p>
 						</form>
 					</div>
@@ -536,7 +568,7 @@ const Section = styled.section`
 				font-weight: 400;
 				margin-left: 0.5rem;
 		}
-			input[type="submit"] {
+			input[type="submit"], input[type="button"] {
 				padding: 1.1em 1.44em;
 				background-color: #3B71FE;
 				color: white;

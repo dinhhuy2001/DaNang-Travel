@@ -169,7 +169,7 @@ export default function BlogList() {
           );})}
           
         </div>
-        <div className="card">
+        {/* <div className="card">
           <h3>Tags</h3>
           <div className="tags">
           {tags.map((item) => {
@@ -179,7 +179,7 @@ export default function BlogList() {
               </div>
           );})}
           </div>
-        </div>
+        </div> */}
       </div>
     </Section>
   );
