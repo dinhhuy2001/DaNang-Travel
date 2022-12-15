@@ -1,39 +1,53 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Destination1 from "../assets/Destination1.png";
-import img1 from "../assets/Long.png";
-import img2 from "../assets/Huy.png";
-import { useParams } from "react-router";
+import img1 from "../assets/profile/defaultImg.png";
+import img2 from "../assets/profile/defaultImg.png";
+import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import { api, api_image } from "../API/api";
 
 
 export default function BlogDetail() {
 	const params = useParams();
-	const [blogdata,setBlogdata] = useState()
-	const [comments,setComments] = useState()
-	const [clickCmt,setClickCmt] = useState(0)
-	const [commentbody,setCommentbody] = useState()
-	useEffect(()=>{
+	const [blogdata, setBlogdata] = useState([])
+	const [comments, setComments] = useState([])
+	const [clickCmt, setClickCmt] = useState(0)
+	const [clickRate, setClickRate] = useState(0)
+	const [commentbody, setCommentbody] = useState()
+	const [populars, setPopulars] = useState([])
+	const navigate = useNavigate()
+	useEffect(() => {
 		const URL2 = api + `api/blog/comments/${params.id}`
 		axios.get(URL2)
-		.then(
-			res=>{
-				console.log(res.data)
-				setComments(res.data)
-			}
-		)
-	},[clickCmt])
-	useEffect(()=>{
+			.then(
+				res => {
+					console.log(res.data)
+					setComments(res.data)
+				}
+			)
+	}, [clickCmt])
+	useEffect(() => {
 		const URL = api + `api/blog/${params.id}`
 		axios.get(URL)
-		.then(
-			res => {
-				console.log(res.data)
-				setBlogdata(res.data)
-			}
-		)
-	},[])
+			.then(
+				res => {
+					console.log(res.data)
+					setBlogdata(res.data)
+				}
+			)
+	}, [clickRate])
+
+	useEffect(() => {
+		const URL = api + "api/blog"
+		axios.get(URL)
+			.then(
+				res => {
+					console.log(res.data)
+					setPopulars(res.data)
+				}
+			)
+	}, [])
 	const post =
 	{
 		image: Destination1,
@@ -92,33 +106,60 @@ export default function BlogDetail() {
 		<Section id="recommend">
 			<ul className="breadcrumb">
 				<li><a href="/home">Home</a></li>
-				<li>A Seaside Reset in Laguna Beach</li>
+				<li>{blogdata?.name}</li>
 			</ul>
 
 			<div className="posts">
 				<div className="post">
-					<img src={api_image + blogdata?.image} alt="" />
+					<img src={
+						(blogdata?.image !== '' ?? blogdata?.image !== null) ? ((blogdata?.image?.includes('http')) ? blogdata?.image : api_image + blogdata?.image) : Destination1
+					} alt="" />
 					<div className="tag">{blogdata?.category?.name}</div>
 					<div className="star-rating">
 						{[...Array(5)].map((star, index) => {
 							index += 1;
-							console.log(index) 
+							console.log(index)
 							return (
-								<button type="button" key={index} className={index <= blogdata?.rating ? "on" : "off"}>
+								<button type="button" key={index} className={index <= blogdata?.rating ? "on" : "off"}
+									onClick={() => {
+										let URL_R = api + `api/blog/rating/${blogdata?.id}`
+										axios.get(URL_R,
+											{
+												params: {
+													user_id: JSON.parse(localStorage.getItem('user-info'))['id'],
+													rating: index,
+												}
+											}
+										)
+											.then(
+												res => {
+													console.log(res.data)
+													setClickRate(clickRate + 1)
+												}
+											)
+										console.log(index)
+									}}
+								>
 									<span className="star" >&#9733;</span>
 								</button>
 							);
 						})}
 					</div>
 					<h3>{blogdata?.name}</h3>
+					<p className='card-address'>
+						{blogdata?.address}
+					</p>
 					<div className="info">
-						<img src={blogdata?.user?.avatar == null ? img1: api_image+ blogdata?.user?.avatar} alt="" />
+						<img src={
+							blogdata?.user?.avatar == null ? img1 : api_image + blogdata?.user?.avatar
+						} alt="" />
 						<span>BY</span><h3>{blogdata?.user?.name}</h3>
-						<span>{new Date(blogdata?.updated_at).toLocaleDateString([],{ year: 'numeric', month: 'long', day: 'numeric' })}</span>
+						<span>{new Date(blogdata?.updated_at).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}</span>
 					</div>
 					<p>{blogdata?.description}</p>
 					{/* <p>{blogdata.body}</p>
 					<p>{blogdata.body}</p> */}
+
 				</div>
 				{/* <div className="pagination">
 					<div className="pagination-item">
@@ -144,22 +185,24 @@ export default function BlogDetail() {
 					<div className="comments" id="comments">
 						<div className="comments-header section-inner small max-percentage">
 							<h2 className="comment-reply-title">
-							{comments?.length} Comment
+								{comments?.length} Comment
 							</h2>
 						</div>
 						{
-							comments?.map((item)=>(
+							comments?.map((item) => (
 								<div className="comments-inner section-inner thin max-percentage">
 									<div id="comment-1" className="comment even thread-even depth-1">
 										<article id="div-comment-1" className="comment-body">
 											<footer className="comment-meta">
 												<div className="comment-author vcard">
 													<a href="" rel="external nofollow" className="url">
-														<img src={item?.user?.avatar == null ? img2 : api_image+item?.user?.avatar} alt="" /><span className="fn">{item?.user?.name}</span>
+														<img src={
+															item?.user?.avatar == null ? img2 : api_image + item?.user?.avatar
+														} alt="" /><span className="fn">{item?.user?.name}</span>
 													</a>
 													<span className="screen-reader-text says">{" says:"}</span>
 												</div>
-												<div className="comment-metadata">{new Date(item?.updated_at).toLocaleDateString([],{ year: 'numeric', month: 'long', day: 'numeric' })}</div>
+												<div className="comment-metadata">{new Date(item?.updated_at).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}</div>
 											</footer>
 											<div className="comment-content entry-content">
 												<p>{item?.body}</p>
@@ -182,7 +225,7 @@ export default function BlogDetail() {
 								<label for="comment">Comment</label>
 								<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"
 									value={commentbody}
-									onChange={(e)=> {
+									onChange={(e) => {
 										setCommentbody(e.target.value)
 										console.log(commentbody)
 									}}
@@ -200,23 +243,23 @@ export default function BlogDetail() {
 								<input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" />
 								<label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p> */}
 							<p className="form-submit">
-								<input name="submit" style={{cursor:"pointer"}} type="button" id="submit" className="submit" value="Post Comment"
-									onClick={()=>{
+								<input name="submit" style={{ cursor: "pointer" }} type="button" id="submit" className="submit" value="Post Comment"
+									onClick={() => {
 										console.log('comment')
 										const URL3 = api + `api/comment/add/${params.id}`
-										if(commentbody != "" || commentbody != null){
+										if (commentbody != "" || commentbody != null) {
 											axios.post(URL3,
 												{
 													user_id: JSON.parse(localStorage.getItem('user-info'))['id'],
 													body: commentbody
 												}
-												)
-											.then(
-												res => {
-													console.log(res.data)
-													setClickCmt(clickCmt+1)
-												}
 											)
+												.then(
+													res => {
+														console.log(res.data)
+														setClickCmt(clickCmt + 1)
+													}
+												)
 										}
 									}}
 								/> <input type='hidden' name='comment_post_ID' value='1' id='comment_post_ID' />
@@ -237,15 +280,21 @@ export default function BlogDetail() {
 				</div>
 				<div className="card">
 					<h3>Popular posts</h3>
-					{popular.map((post) => {
+					{populars?.map((post) => {
 						return (
-							<div className="post">
-								<div className="post-image">
+							<div className="post"
+								onClick={() => {
+									navigate(`/blog/${post.id}`);
+									setClickRate(clickRate+1)
+									setClickCmt(clickCmt+1)
+								}}
+							>
+								<div class="post-image">
 									<img src={post.image} alt="" />
 								</div>
-								<div className="post-content">
-									<h4>{post.title}</h4>
-									<p>{post.subTitle}</p>
+								<div class="post-content">
+									<h4>{post.name}</h4>
+									<p>{new Date(post.updated_at).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}</p>
 								</div>
 							</div>
 						);
@@ -461,6 +510,9 @@ const Section = styled.section`
 		outline: none;
 		cursor: pointer;
 		font-size:2rem;
+		&:hover {
+			color: #FF5733;
+		  }
 	  }
 	  .on {
 		color: #F2994A;

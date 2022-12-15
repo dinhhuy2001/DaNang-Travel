@@ -19,6 +19,7 @@ import { ProfileSchema } from '../../../schema/Schema';
 import DefaultImg from '../../../../../assets/profile/defaultImg.png';
 import { WrapperForm, ValidationError } from './styled';
 import axios from 'axios';
+import { api, api_image } from '../../../../../API/api';
 
 export default function FormProfile() {
   const { Text } = Typography;
@@ -45,7 +46,7 @@ export default function FormProfile() {
 
   const onSubmit = (data) => {
     console.log(data);
-    axios.post("http://127.0.0.1:8000/api/editprofile/"+ (JSON.parse(localStorage.getItem("user-info")).id),data,
+    axios.post(api+"api/editprofile/"+ (JSON.parse(localStorage.getItem("user-info")).id),data,
     {
       headers : {
         "Content-Type": "multipart/form-data",
@@ -61,17 +62,17 @@ export default function FormProfile() {
     // updateUser({ data, callbackSuccess: updateInfoSuccess, callbackFail: updateInfoFail });
   };
 
-  // const handleChange = async (e) => {
-  //   setIsUpload(true);
-  //   await upload(e.target.files[0])
-  //     .then((res) => {
-  //       const data = { avatar: res };
-  //       updateUser({ data, callbackSuccess: updateInfoSuccess, callbackFail: updateInfoFail });
-  //     })
-  //     .catch()
-  //     .finally(() => setIsUpload(false));
-  //   setIsUpload(false);
-  // };
+  const handleChange = async (e) => {
+    setIsUpload(true);
+    // await upload(e.target.files[0])
+    //   .then((res) => {
+    //     const data = { avatar: res };
+    //     // updateUser({ data, callbackSuccess: updateInfoSuccess, callbackFail: updateInfoFail });
+    //   })
+    //   .catch()
+    //   .finally(() => setIsUpload(false));
+    setIsUpload(false);
+  };
 console.log(JSON.parse(localStorage.getItem('user-info')).avatar)
   return (
     <WrapperForm>
@@ -82,7 +83,7 @@ console.log(JSON.parse(localStorage.getItem('user-info')).avatar)
               <Col xl={6} sm={24} xs={24} className='flex-avatar'>
                 <Image
                   src={JSON.parse(localStorage.getItem('user-info')).avatar !== null
-                    ? 'http://127.0.0.1:8000/storage/'+ JSON.parse(localStorage.getItem('user-info')).avatar 
+                    ? api_image+ JSON.parse(localStorage.getItem('user-info')).avatar 
                     : DefaultImg}
                   // src={DefaultImg}
                   alt='Avatar'
@@ -122,8 +123,8 @@ console.log(JSON.parse(localStorage.getItem('user-info')).avatar)
                 />
                 <FormInput
                   label={'Phone Number'}
-                  name='phoneNumber'
-                  // defaultValue={currentUser?.phoneNumber}
+                  name='phone'
+                  defaultValue={JSON.parse(localStorage.getItem('user-info')).phone}
                   control={control}
                   errors={errors?.phoneNumber?.message}
                   Icon={PhoneOutlined}
@@ -159,7 +160,7 @@ console.log(JSON.parse(localStorage.getItem('user-info')).avatar)
                   render={({ field }) => (
                     <Radio.Group className='radio-gender' {...field}>
                       <Radio value={1}> {'Male'}</Radio>
-                      <Radio value={0}>{'Female'}</Radio>
+                      <Radio value={2}>{'Female'}</Radio>
                     </Radio.Group>
                   )}
                 />
