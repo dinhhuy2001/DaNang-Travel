@@ -333,7 +333,7 @@ export default function BlogDetail() {
         </div>
       </div>
       <div className="sidebar">
-        <div className="card">
+        {/* <div className="card">
           <h3>{t("blog.search")}</h3>
           <form>
             <input type="text" placeholder="Search.." name="search" />
@@ -341,12 +341,13 @@ export default function BlogDetail() {
               <i className="fa fa-search"></i>
             </button>
           </form>
-        </div>
+        </div> */}
         <div className="card">
           <h3>{t("blog.popular_post")}</h3>
           {populars?.map((post) => {
             return (
               <div
+			  style={{cursor:"pointer"}}
                 className="post"
                 onClick={() => {
                   navigate(`/blog/${post.id}`);

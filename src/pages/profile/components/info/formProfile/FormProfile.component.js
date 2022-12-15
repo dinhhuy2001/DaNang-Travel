@@ -88,7 +88,7 @@ export default function FormProfile() {
         <FormInput
           label={t("profile.name")}
           name="name"
-          defaultValue={JSON.parse(localStorage.getItem("user-info"))?.username}
+          defaultValue={JSON.parse(localStorage.getItem("user-info"))?.name}
           control={control}
           errors={errors?.username?.message}
           Icon={UserOutlined}
