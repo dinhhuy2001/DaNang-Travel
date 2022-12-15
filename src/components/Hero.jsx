@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from '../assets/index';
 import Slider from 'react-slick';
-
+import { useTranslation } from "react-i18next";
 export default function Hero() {
+  const {t} = useTranslation()
   var settings = {
     dots: true,
     infinite: true,
@@ -29,8 +30,8 @@ export default function Hero() {
           </div>
         </Slider>
         <div className='hero-content'>
-          <h1>Find your next stay</h1>
-          <p>Get the best prices on 2,000,000+ properties, worldwide</p>
+          <h1>{t('home.find_your_next_stay')}</h1>
+          <p>{t('home.get_best')}</p>
         </div>
       </div>
     </Section>
