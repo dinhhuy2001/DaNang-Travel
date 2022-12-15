@@ -2,6 +2,9 @@
   "blog": {
     "search": "Search",
     "categories": "Categories",
+    "comment":"Comment",
+    "leave_comment":"Leave Comment",
+    "say":"Says",
     "popular_post": "Popular posts",
     "home": "Home",
     "blog": "Blog"

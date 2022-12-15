@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { api, api_image } from "../API/api";
+import Slider from "react-slick";
+import imgDN from "../assets/danang.jpg";
+import { StarFilled } from "@ant-design/icons";
+import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 
-import { api, api_image } from '../API/api';
-import Slider from 'react-slick';
-import imgDN from '../assets/danang.jpg';
-import { StarFilled } from '@ant-design/icons';
-import { useNavigate } from 'react-router';
-
-import { useTranslation } from 'react-i18next';
 export default function Top() {
   const [category, setCategory] = useState();
   const { t } = useTranslation();
@@ -15,6 +14,10 @@ export default function Top() {
   const [categoryId, setCategoryId] = useState(1);
   const [blog, setBlog] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getListCategory();
+  }, []);
 
   useEffect(() => {
     const URL = api + `api/blogByCate?category_id=${categoryId}`;
@@ -37,7 +40,7 @@ export default function Top() {
       );
     }
     return (
-      <ul className='rating-list'>
+      <ul className="rating-list">
         {[...Array(rating).keys()].map((item) => (
           <li className='rating-item'>
             <StarFilled style={{ fontSize: '14px', color: '#DA6938' }} />
@@ -69,7 +72,7 @@ export default function Top() {
     ],
   };
 
-  const getListCategory = () => {
+  const getListCategory = async () => {
     if (!isRequestAPI) {
       const URL = api + 'api/category';
       setIsRequestAPI(true);
@@ -85,27 +88,23 @@ export default function Top() {
     }
   };
 
-  useEffect(() => {
-    getListCategory();
-  }, []);
-
   return (
     <section>
-      <section className='section-top'>
-        <div className='container'>
-          <h2 className='txt-title txt-center mb-5'>Categories</h2>
-          <div className='destination-list'>
+      <section className="section-top">
+        <div className="container">
+          <h2 className="txt-title txt-center mb-5">{t('home.categories')}</h2>
+          <div className="destination-list">
             <Slider {...settings}>
               {category?.map((item) => {
                 return (
                   <div
-                    className='destination-item'
+                    className="destination-item"
                     onClick={() => {
                       console.log(item.id);
                       setCategoryId(item.id);
                     }}
                   >
-                    <div className='destination-image'>
+                    <div className="destination-image">
                       <img
                         src={
                           item.image !== null ?? item.image !== ''
@@ -114,10 +113,10 @@ export default function Top() {
                               : api_image + item.image
                             : imgDN
                         }
-                        alt=''
+                        alt=""
                       />
                     </div>
-                    <h3 className='destination-title'>{item.name}</h3>
+                    <h3 className="destination-title">{item.name}</h3>
                   </div>
                 );
               })}
@@ -140,8 +139,8 @@ export default function Top() {
                       navigate(`/blog/${item.id}`);
                     }}
                   >
-                    <div className='card'>
-                      <div className='card-image'>
+                    <div className="card">
+                      <div className="card-image">
                         <a>
                           <img
                             src={
@@ -155,10 +154,10 @@ export default function Top() {
                           />
                         </a>
                       </div>
-                      <div className='card-content'>
+                      <div className="card-content">
                         {renderRating(item.rating)}
                         <h4 className='card-name'>
-                          <h1>{item.name}</h1>
+                          {item.name}
                         </h4>
                         <p className='card-address'>{item.address}</p>
                         <p className='card-desc'>{item.description}</p>

@@ -1,9 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components';
-import { api, api_image } from '../API/api';
-import img1 from '../assets/Long.png';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import styled from "styled-components";
+import { api, api_image } from "../API/api";
+import img1 from "../assets/profile/defaultImg.png";
 import imgDN from '../assets/danang.jpg';
 import { StarFilled } from '@ant-design/icons';
 

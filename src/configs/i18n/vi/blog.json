@@ -1,10 +1,12 @@
 {
-    "blog": {
-      "search": "Tìm kiếm",
-      "categories": "Thể loại",
-      "popular_post": "Bài viết phổ biến",
-      "home": "Trang chủ",
-      "blog": "Bài viết"
-    }
+  "blog": {
+    "search": "Tìm kiếm",
+    "categories": "Thể loại",
+    "comment": "Bình luận",
+    "leave_comment": "Thoát bình luận",
+    "say": "Nói",
+    "popular_post": "Bài viết phổ biến",
+    "home": "Trang chủ",
+    "blog": "Bài viết"
   }
-  
+}
