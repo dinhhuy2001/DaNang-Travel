@@ -1,0 +1,9 @@
+{
+  "blog": {
+    "search": "Search",
+    "categories": "Categories",
+    "popular_post": "Popular posts",
+    "home": "Home",
+    "blog": "Blog"
+  }
+}

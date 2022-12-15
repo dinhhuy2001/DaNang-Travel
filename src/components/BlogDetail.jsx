@@ -6,7 +6,7 @@ import img2 from "../assets/profile/defaultImg.png";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import { api, api_image } from "../API/api";
-
+import { useTranslation } from "react-i18next";
 
 export default function BlogDetail() {
 	const params = useParams();
@@ -82,25 +82,25 @@ export default function BlogDetail() {
 		}
 	]
 
-	const categories = [
-		{
-			name: "BOOKING",
-			number: "2",
-		},
-		{
-			name: "HOTEL",
-			number: "2",
-		},
-		{
-			name: "STAYS",
-			number: "2",
-		},
-		{
-			name: "TRAVEL",
-			number: "2",
-		}
-	]
-	const tags = ["Content", "Offers", "Promotion", "SEO", "Social media"]
+  const categories = [
+    {
+      name: "BOOKING",
+      number: "2",
+    },
+    {
+      name: "HOTEL",
+      number: "2",
+    },
+    {
+      name: "STAYS",
+      number: "2",
+    },
+    {
+      name: "TRAVEL",
+      number: "2",
+    },
+  ];
+  const tags = ["Content", "Offers", "Promotion", "SEO", "Social media"];
 
 	return (
 		<Section id="recommend">
@@ -315,29 +315,26 @@ export default function BlogDetail() {
 						);
 					})}
 
-				</div>
-				<div className="card">
-					<h3>Tags</h3>
-					<div className="tags">
-						{tags.map((item) => {
-							return (
-								<div className="tag">
-									{item}
-								</div>
-							);
-						})}
-					</div>
-				</div>
-			</div>
-		</Section>
-	);
+                <h4>{item.number}</h4>
+              </div>
+        </div>
+        <div className="card">
+          <h3>Tags</h3>
+          <div className="tags">
+            {tags.map((item) => {
+              return <div className="tag">{item}</div>;
+            })}
+          </div>
+        </div>
+    </Section>
+  );
 }
 
 const Section = styled.section`
   display: grid;
   grid-template-areas:
-    'header header header'
-    'main main right';
+    "header header header"
+    "main main right";
   background-color: white;
   .breadcrumb {
     margin-bottom: 50px;
@@ -345,7 +342,7 @@ const Section = styled.section`
     padding: 10px 16px;
     list-style: none;
     background-color: white;
-    border: 1px solid #DEDEDE;
+    border: 1px solid #dedede;
     li {
       display: inline;
       font-size: 18px;
@@ -363,9 +360,8 @@ const Section = styled.section`
       color: black;
       content: "/\\00a0";
     }
-   
   }
-  
+
   .sidebar {
     grid-area: right;
     display: flex;
@@ -378,16 +374,16 @@ const Section = styled.section`
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-      background-color: #F7F8FA;
+      background-color: #f7f8fa;
       border-radius: 1rem;
-      border: 1px solid #DEDEDE;
+      border: 1px solid #dedede;
       transition: 0.3s ease-in-out;
       &:hover {
         transform: translateX(0.4rem) translateY(-1rem);
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
       }
       h3 {
-        border-bottom: 1px solid #DEDEDE;
+        border-bottom: 1px solid #dedede;
       }
       form {
         input {
@@ -396,7 +392,7 @@ const Section = styled.section`
           width: 100%;
           font-size: 16px;
           background-color: white;
-          border: 1px solid #DEDEDE;
+          border: 1px solid #dedede;
           padding-inline-start: 16px;
         }
         button {
@@ -404,23 +400,23 @@ const Section = styled.section`
           width: 40px;
           border-radius: 50px;
           margin-left: -50px;
-          background-color: #3B71FE;
+          background-color: #3b71fe;
           color: white;
           border: 1px solid black;
         }
       }
       .post {
-        display:flex;
+        display: flex;
         .post-image {
           padding-right: 20px;
           img {
-            width:100px;
+            width: 100px;
             height: 100px;
           }
         }
         .post-content {
           margin-left: auto;
-          display:flex;
+          display: flex;
           height: 100px;
           flex-direction: column;
           justify-content: space-between;
@@ -428,20 +424,20 @@ const Section = styled.section`
       }
       .cat-item {
         background-color: white;
-        border: 1px solid #DEDEDE;
+        border: 1px solid #dedede;
         height: 50px;
         border-radius: 1rem;
-        display:flex;
+        display: flex;
         flex-direction: row;
         justify-content: space-between;
-        align-items :center;
-        padding-inline: 20px; 
+        align-items: center;
+        padding-inline: 20px;
         .item-name {
           display: flex;
           border-radius: 30px;
           height: 30px;
           width: 100px;
-          align-items :center;
+          align-items: center;
           justify-content: center;
           background-color: rgba(136, 7, 53, 0.06);
           color: #880735;
@@ -450,22 +446,21 @@ const Section = styled.section`
       .tags {
         display: flex;
         flex-wrap: wrap;
-      .tag {
-        margin-right: 10px;
-        margin-bottom: 10px;
-        background-color: white;
-        border: 1px solid #DEDEDE;
-        height: 40px;
-        border-radius: 1rem;
-        align-items :center;
-        justify-content: center;
-        display: grid;
-        width: max-content;
-        padding-inline: 10px; 
+        .tag {
+          margin-right: 10px;
+          margin-bottom: 10px;
+          background-color: white;
+          border: 1px solid #dedede;
+          height: 40px;
+          border-radius: 1rem;
+          align-items: center;
+          justify-content: center;
+          display: grid;
+          width: max-content;
+          padding-inline: 10px;
+        }
       }
     }
-    }
-      
   }
   .posts {
     grid-area: main;
@@ -480,7 +475,7 @@ const Section = styled.section`
       gap: 0.5rem;
       background-color: #fffff;
       border-radius: 1rem;
-      border: 1px solid #DEDEDE;
+      border: 1px solid #dedede;
       transition: 0.3s ease-in-out;
       &:hover {
         transform: translateX(0.4rem) translateY(-1rem);
@@ -494,11 +489,28 @@ const Section = styled.section`
         width: max-content;
         padding-inline: 10px;
         border-radius: 30px;
-        border: 1px solid #3B71FE;
-        color: #3B71FE;
+        border: 1px solid #3b71fe;
+        color: #3b71fe;
       }
-      h3, p {
-        padding-inline:20px;
+      h3,
+      p {
+        padding-inline: 20px;
+      }
+      .star-rating {
+        padding-inline: 20px;
+      }
+      button {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-size: 2rem;
+      }
+      .on {
+        color: #f2994a;
+      }
+      .off {
+        color: #ccc;
       }
 	  .star-rating {
 		padding-inline:20px;
@@ -540,94 +552,100 @@ const Section = styled.section`
     .pagination {
       display: flex;
       flex-direction: row;
-			border-top: 1px solid #DEDEDE;
-			border-bottom: 1px solid #DEDEDE;
-			padding-top:10px;
-			justify-content: space-between;
-      .pagination-item {	
-        display:flex;
-				flex-direction:row;
+      border-top: 1px solid #dedede;
+      border-bottom: 1px solid #dedede;
+      padding-top: 10px;
+      justify-content: space-between;
+      .pagination-item {
+        display: flex;
+        flex-direction: row;
         .post-image {
           padding-right: 20px;
           img {
-            width:100px;                
-						height: 100px;
+            width: 100px;
+            height: 100px;
           }
         }
         .post-content {
           margin-left: auto;
-          display:flex;
-          height: 100px;            
-					flex-direction: column;
+          display: flex;
+          height: 100px;
+          flex-direction: column;
           justify-content: center;
-	      }
+        }
       }
     }
-		.comments {
-			margin: 20px 0;
-		}
-		
-		.comment-author {
-			img {
-				width: 100px;
-				border-radius: 50%;
-			}
-			.fn {
-				font-weight:bold;
-				color:black;
-			}
-		}
-		.comment-metadata {
-			color:gray;
-		}
-		.comment-reply-link {
-			background-color: #3B71FE;
-			color: #fff;
-			display: block;
-			padding: 0.3rem;
-			width: max-content;
-		}
+    .comments {
+      margin: 20px 0;
+    }
 
-		.comment-reply-title {
-			margin-bottom: 20px;
-		}
-		
-		.comment-respond {
-			margin-bottom: 10px;
-			.comment-form-author,.comment-form-email {
-				float: left;
-				width: calc(50% - 1rem);
-				input, label{
-					display: block;
-				}
-			}
-			.comment-form-email {
-				margin-left: 2rem;
-			}
-			input, textarea {
-				margin-bottom: 10px;
-			}
-			input[type="text"], input[type="email"], textarea {
-				display: block;
-				border: 1px solid #DEDEDE;
-				padding: 1rem 1.3rem;
-				font-size: 1rem;
-				width: 100%;
-				max-width: 100%;
-			}
-			input[type="checkbox"] + label {
-				display: inline;
-				font-weight: 400;
-				margin-left: 0.5rem;
-		}
-			input[type="submit"], input[type="button"] {
-				padding: 1.1em 1.44em;
-				background-color: #3B71FE;
-				color: white;
-				border-radius: 1rem;
-				margin-top: 10px;
-			}
-		}
+    .comment-author {
+      img {
+        width: 100px;
+        border-radius: 50%;
+      }
+      .fn {
+        font-weight: bold;
+        color: black;
+      }
+    }
+    .comment-metadata {
+      color: gray;
+    }
+    .comment-reply-link {
+      background-color: #3b71fe;
+      color: #fff;
+      display: block;
+      padding: 0.3rem;
+      width: max-content;
+    }
+
+    .comment-reply-title {
+      margin-bottom: 20px;
+    }
+
+    .comment-respond {
+      margin-bottom: 10px;
+      .comment-form-author,
+      .comment-form-email {
+        float: left;
+        width: calc(50% - 1rem);
+        input,
+        label {
+          display: block;
+        }
+      }
+      .comment-form-email {
+        margin-left: 2rem;
+      }
+      input,
+      textarea {
+        margin-bottom: 10px;
+      }
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        display: block;
+        border: 1px solid #dedede;
+        padding: 1rem 1.3rem;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 100%;
+      }
+      input[type="checkbox"] + label {
+        display: inline;
+        font-weight: 400;
+        margin-left: 0.5rem;
+      }
+      input[type="submit"],
+      input[type="button"] {
+        padding: 1.1em 1.44em;
+        background-color: #3b71fe;
+        color: white;
+        border-radius: 1rem;
+        margin-top: 10px;
+      }
+    }
   }
   @media screen and (min-width: 280px) and (max-width: 768px) {
     .packages {
@@ -648,6 +666,5 @@ const Section = styled.section`
         height: 50px;
       }
     }
-
   }
 `;

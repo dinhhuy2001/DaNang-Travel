@@ -13,8 +13,10 @@ import Destination5 from "../assets/hero-img1.png";
 import Destination6 from "../assets/hero-img3.png";
 import { useNavigate } from 'react-router';
 
+import { useTranslation } from 'react-i18next';
 export default function Top() {
   const [category, setCategory] = useState();
+  const {t} = useTranslation()
   const [isRequestAPI, setIsRequestAPI] = useState(false);
   const [categoryId, setCategoryId] = useState(1)
   const [blog, setBlog] = useState([])
