@@ -6,6 +6,7 @@ import Footer from '../../components/Footer';
 import DefaultImg from '../../assets/profile/defaultImg.png';
 import { WrapperProfile } from './styled';
 import { useTranslation } from 'react-i18next';
+import { api_image } from '../../API/api';
 export default function Profile({ children }) {
   const { Title, Text } = Typography;
   const { t } = useTranslation();
@@ -21,7 +22,13 @@ export default function Profile({ children }) {
                   <Col span={24}>
                     <Image
                       // src={currentUser?.avatar ? currentUser.avatar : DefaultImg}
-                      src = {DefaultImg}
+                      src = {
+                        JSON.parse(localStorage.getItem('user-info')).image == null
+                        ?
+                        api_image + JSON.parse(localStorage.getItem('user-info'))?.avatar
+                        :
+                        DefaultImg
+                      }
                       preview={false}
                       alt='Avatar'
                       className='avatar'
@@ -29,7 +36,7 @@ export default function Profile({ children }) {
                   </Col>
                   <Col span={24}>
                     <Title level={5}>{t('profile.account_for')}:</Title>
-                    <Text>UserName</Text>
+                    <Text>{JSON.parse(localStorage.getItem('user-info'))?.name}</Text>
                   </Col>
                 </Skeleton>
               </Row>

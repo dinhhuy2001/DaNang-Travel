@@ -63,12 +63,19 @@ export default function Top() {
   };
 
   const getListCategory = async () => {
-    const URL = "https://cd8a-183-80-224-24.ap.ngrok.io/api/category";
-    console.log("res");
-    setIsRequestAPI(true);
-    const res = axios.get(URL);
-    console.log("ressss", res.data);
-    setIsRequestAPI(false);
+    if (!isRequestAPI) {
+      const URL = api + 'api/category';
+      setIsRequestAPI(true);
+      axios
+        .get(URL)
+        .then((res) => {
+          setCategory(res.data);
+          setIsRequestAPI(false);
+        })
+        .catch((err) => {
+          setIsRequestAPI(false);
+        });
+    }
   };
 
   return (

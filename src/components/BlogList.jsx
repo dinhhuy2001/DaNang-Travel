@@ -4,7 +4,8 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { api, api_image } from "../API/api";
 import Destination1 from "../assets/Destination1.png";
-import img1 from "../assets/Long.png";
+// import img1 from "../assets/Long.png";
+import img1 from "../assets/profile/defaultImg.png";
 import imgDN from '../assets/danang.jpg';
 
 import { useTranslation } from "react-i18next";
@@ -196,6 +197,7 @@ export default function BlogList() {
           {populars?.map((post) => {
             return (
               <div className="post"
+              style={{cursor:"pointer"}}
                 onClick={() => {
                   navigate(`/blog/${post.id}`);
                 }}
