@@ -16,6 +16,7 @@ const Header = () => {
     localStorage.setItem('language', newLang);
   };
   const lang = ['EN', 'JP', 'VI'];
+  // eslint-disable-next-line
   const [isLogin, setIsLogin] = useState(localStorage.getItem('user-info'));
   const navigate = useNavigate();
   const location = useLocation();
