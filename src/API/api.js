@@ -1,2 +1,2 @@
-export const api = "http://127.0.0.1:8000/"
-export const api_image = "http://127.0.0.1:8000/storage/"
+export const api = "https://danang-travel-be-production.up.railway.app/"
+export const api_image = "https://danang-travel-be-production.up.railway.app/storage/"
