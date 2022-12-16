@@ -12,6 +12,7 @@ import '../src/stylesheet/styles.scss';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Bloglist from './pages/bloglist/Bloglist';
+import New from './pages/new/New';
 
 export default function App() {
     return (
@@ -24,6 +25,7 @@ export default function App() {
                     <Route path="/about" element={<AboutUs />} />
                     <Route path="/bloglist" element={<Bloglist />} />
                     <Route path="/blog/:id" element={<Blog />} />
+                    <Route path="/new" element={<New />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/profile" element={<Profile><Info/></Profile>} />
                     <Route path="/change-pass" element={<Profile><ChangePassword/></Profile>} />
