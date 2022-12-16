@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import img1 from '../../assets/danang.jpg';
 import validator from 'validator';
 import axios from 'axios'
-import {authAPi} from './api.js'
-import {ToastContainer, toast} from 'react-toastify'
+import { toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../API/api';
 

@@ -49,6 +49,7 @@ const FormPost = () => {
   useEffect(() => {
     getListCategory();
     setUserInfo(JSON.parse(localStorage.getItem('user-info')));
+    // eslint-disable-next-line
   }, []);
 
   return (

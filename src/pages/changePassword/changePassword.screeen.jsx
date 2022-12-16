@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 // import { yupResolver } from '@hookform/resolvers/yup';
 import { Row, Col, Typography, Form, Checkbox, Space, Spin, Button } from 'antd';
 
-import { ChangePasswordSchema } from './schema';
+// import { ChangePasswordSchema } from './schema';
 import FormInput from '../../components/input';
 import { Wrapper } from './styled';
 import { api } from '../../API/api';
@@ -22,8 +22,6 @@ export default function ChangePassword() {
     formState: { errors },
   } = useForm({
   });
-
- 
 
   const onSubmit = (data) => {
     console.log(data)

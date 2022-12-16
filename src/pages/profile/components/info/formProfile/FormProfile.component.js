@@ -1,33 +1,30 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 // import { yupResolver } from '@hookform/resolvers/yup';
 import {
   UserOutlined,
   MailOutlined,
   PhoneOutlined,
-  CalendarOutlined,
   HeartOutlined,
-  AuditOutlined,
-  EditOutlined,
 } from "@ant-design/icons";
-import { Row, Col, Radio, Form, Image, Typography, Spin, Button } from "antd";
+import { Row, Col, Radio, Form, Typography, Button } from "antd";
 
-import { PrimaryButton } from "../../../../../components/button";
+// import { PrimaryButton } from "../../../../../components/button";
 import FormInput from "../../../../../components/input";
 // import { upload } from '../../../../../config/firebase/firebase';
-import { ProfileSchema } from "../../../schema/Schema";
-import DefaultImg from "../../../../../assets/profile/defaultImg.png";
+// import { ProfileSchema } from "../../../schema/Schema";
+// import DefaultImg from "../../../../../assets/profile/defaultImg.png";
 import { WrapperForm, ValidationError } from "./styled";
 import axios from "axios";
-import { api, api_image } from "../../../../../API/api";
-import { useTranslation } from "react-i18next";
+import { api } from "../../../../../API/api";
+// import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 
 export default function FormProfile() {
   const { Text } = Typography;
 
-  const inputRef = useRef(null);
-
+  // const inputRef = useRef(null);
+  // eslint-disable-next-line
   const [isUpload, setIsUpload] = useState(false);
 
   const {
@@ -67,7 +64,7 @@ export default function FormProfile() {
     // delete data.email;
     // updateUser({ data, callbackSuccess: updateInfoSuccess, callbackFail: updateInfoFail });
   };
-
+  // eslint-disable-next-line
   const handleChange = async (e) => {
     setIsUpload(true);
     // await upload(e.target.files[0])
@@ -79,7 +76,6 @@ export default function FormProfile() {
     //   .finally(() => setIsUpload(false));
     setIsUpload(false);
   };
-  console.log(JSON.parse(localStorage.getItem("user-info"))?.avatar);
   return (
     <WrapperForm>
       {/* {currentUser ? (

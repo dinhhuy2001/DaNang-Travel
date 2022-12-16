@@ -17,6 +17,7 @@ export default function Top() {
 
   useEffect(() => {
     getListCategory();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
