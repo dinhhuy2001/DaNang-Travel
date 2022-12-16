@@ -139,3 +139,38 @@
     }
   }
 }
+
+.section {
+  &-new {
+    padding: 50px 0 80px 0;
+    .new-wrapper {
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .form-post {
+      &-group {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        label {
+          margin-bottom: 10px;
+        }
+        input,
+        textarea,
+        select {
+          border: 1px solid #cacaca;
+          border-radius: 4px;
+          padding: 12px 20px;
+          font-family: $primaryFont;
+          color: #232323;
+          font-size: 16px;
+        }
+      }
+      &-btn {
+        margin-top: 40px;
+        margin-left: auto;
+      }
+    }
+  }
+}
